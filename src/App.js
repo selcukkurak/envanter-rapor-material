@@ -28,7 +28,6 @@ function App() {
   const [secilenVeriTurleri,setSecilenVeriTurleri]=useState([])
   const [secilenBirimList, setSecilenBirimList] = useState([])
   
-  //const [haberBulteniSayisi,setHaberBulteniSayisi]=useState()
   const [haberBulteniList,setHaberBulteniList]=useState([])
   
   //const [istatistikiUrunSayisi,setIstatistikiUrunSayisi]=useState()
