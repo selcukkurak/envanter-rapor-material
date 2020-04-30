@@ -1,6 +1,5 @@
+import { List, ListItem } from '@material-ui/core';
 import React, { useState } from 'react';
-import { ListItem, ListItemText, List } from '@material-ui/core';
-import OpenDialogDemo from './IdariKayitDetayDialog.js';
 import IdariKayitDetayDialog from './IdariKayitDetayDialog.js';
 
 

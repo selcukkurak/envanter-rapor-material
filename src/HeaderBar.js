@@ -1,10 +1,10 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { IconButton } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
+import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import logo from './images/tuik-logo.svg'
-import { IconButton } from '@material-ui/core';
+import React from 'react';
+import logo from './images/tuik-logo.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
