@@ -172,23 +172,23 @@ function App() {
   const filteredIstatistikiUrunList=useMemo(()=>{
     //setSelectedUrunKod(null)
     return filterIstatistikiUrunList()
-  },[arananUrun,selectedUrunKod,istatistikiUrunList,secilenUretimSikliklar,secilenCografiDuzeyler, secilenBirimList,secilenVeriTurleri,selectedHaberBultenKod,selectedKaynakKurum])
+  },[filterIstatistikiUrunList,arananUrun,selectedUrunKod,istatistikiUrunList,secilenUretimSikliklar,secilenCografiDuzeyler, secilenBirimList,secilenVeriTurleri,selectedHaberBultenKod,selectedKaynakKurum])
   
   const filteredHaberBulteniList=useMemo(
     ()=>{
     return filterHaberBulteniList()
-  },[haberBulteniList, filteredIstatistikiUrunList,selectedUrunKod,arananHaberBulteni])
+  },[filterHaberBulteniList,haberBulteniList, filteredIstatistikiUrunList,selectedUrunKod,arananHaberBulteni])
 
   const filteredKaynakKurumlarList=useMemo(
     ()=>{
     return filterKaynakKurumList()
-  },[kaynakKurumlarList, filteredIstatistikiUrunList,selectedUrunKod,arananKurum])
+  },[filterKaynakKurumList,kaynakKurumlarList, filteredIstatistikiUrunList,selectedUrunKod,arananKurum])
 
   useEffect(()=>{
      loadIstatistikiUrunDetayi()
      loadIdariKayitlar()
      loadAnketler()
-  },[selectedUrunKod])
+  },[selectedUrunKod,loadIstatistikiUrunDetayi,loadIdariKayitlar,loadAnketler])
 
 
   function loadUretimSiklikList(){
@@ -234,13 +234,12 @@ function App() {
     )
   }
 
-
   function filterHaberBulteniList(){
     const secilenIstatistikiUrunKodlar=filteredIstatistikiUrunList.map(data=>data.bulten_kod)
     const seciliUrun = filteredIstatistikiUrunList.find(data => data.istatistiki_urun_kod === selectedUrunKod)
     return haberBulteniList.filter(data=>{
         if(seciliUrun){
-          return (seciliUrun.bulten_kod == data.kod)
+          return (seciliUrun.bulten_kod === data.kod)
         } else if(arananHaberBulteni){
           return (data.ad.toLowerCase().includes(arananHaberBulteni.toLowerCase()))
         } else{
@@ -370,10 +369,6 @@ function App() {
       checkedList.splice(currentIndex, 1);
     }
     setSecilenBirimList(checkedList)
-  }
-
-  const handleBirimListClick = (event, values) => {
-    setSecilenBirimList(values)
   }
 
   const handeClickIstatistikiUrunItem = (event,index) => {

@@ -1,4 +1,4 @@
-import { Divider, Grid, makeStyles, TableCell } from '@material-ui/core';
+import { Divider, Grid, makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogActions from '@material-ui/core/DialogActions';
@@ -75,16 +75,7 @@ export default function AnketDetayDialog(props) {
     },
   }))
 
-  const StyledTableCell = withStyles((theme) => ({
-    head: {
-      backgroundColor: '#5A6F7B',
-      color: theme.palette.common.white,
-    },
-    body: {
-      fontSize: 14,
-    },
-  }))(TableCell);
-
+ 
   const classes = useStyles()
   return (
     <div>

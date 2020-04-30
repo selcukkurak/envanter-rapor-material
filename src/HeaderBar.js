@@ -23,7 +23,7 @@ export default function HeaderBar() {
       <AppBar position="fixed" style={{ background: '#2F3A40' }}>
         <Toolbar variant="dense">
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <img src={logo} width="40px"></img>
+            <img src={logo} width="40px" alt="banner"></img>
           </IconButton>
           <Typography variant="h6" color="inherit">
             ENVANTER
