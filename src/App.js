@@ -326,7 +326,7 @@ function App() {
 
   return (
     <div className={classes.mainDiv}>
-        <HeaderBar></HeaderBar>
+        <HeaderBar />
         <Grid container  className={classes.mainGrid}> 
             <Grid item xs={2} className={classes.subGrid}>
                 <Grid item xs={12} className={classes.subGrid}>
@@ -393,7 +393,7 @@ function App() {
                 </Grid>
                 <Grid item xs={12} className={classes.subGrid}>
                     Birimler:
-                    <Divider></Divider>
+                    <Divider />
                     <List className={classes.filterlist}>
                       {birimlerList.map((value) => {
                         const labelId = `checkbox-list-label-${value.ic_birim_kod}`;
@@ -580,7 +580,7 @@ function App() {
                                   </Grid>
                                 </Grid>
                                 <Grid item sm={12}>
-                                  <Divider></Divider>
+                                  <Divider />
                                 </Grid>
                                 <Grid item sm={12} container direction="row">
                                   <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
@@ -591,7 +591,7 @@ function App() {
                                   </Grid>
                                 </Grid>
                                 <Grid item sm={12}>
-                                  <Divider></Divider>
+                                  <Divider />
                                 </Grid>
                                 <Grid item sm={12} container direction="row">
                                   <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
@@ -602,7 +602,7 @@ function App() {
                                   </Grid>
                                 </Grid>
                                 <Grid item sm={12}>
-                                  <Divider></Divider>
+                                  <Divider />
                                 </Grid>
                                 <Grid item sm={12} container direction="row">
                                   <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
@@ -619,7 +619,7 @@ function App() {
                                   </Grid>
                                 </Grid>
                                 <Grid item sm={12}>
-                                  <Divider></Divider>
+                                  <Divider />
                                 </Grid>
                                 <Grid item sm={12} container direction="row">
                                   <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
@@ -659,7 +659,7 @@ function App() {
                                     )}
                                   </Grid>
                                   <Grid item sm={12}>
-                                    <IdariKayitlarList datas={idariKayitlar} classes={classes}></IdariKayitlarList>
+                                    <IdariKayitlarList datas={idariKayitlar} classes={classes} />
                                   </Grid>
                                   <Grid item sm={12}>
                                     {anketler.length>0 &&(
@@ -667,7 +667,7 @@ function App() {
                                     )}
                                   </Grid>
                                   <Grid item sm={12}>
-                                    <AnketlerList datas={anketler} classes={classes}></AnketlerList>
+                                    <AnketlerList datas={anketler} classes={classes} />
                                   </Grid>
                                 </Grid>
                               </Grid>
