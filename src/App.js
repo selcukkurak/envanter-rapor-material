@@ -1,23 +1,20 @@
 import {
   Card,
   CardContent,
-  Checkbox,
   Chip,
   Divider,
   Grid,
   IconButton,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   TextField,
   Tooltip,
   Typography
 } from '@material-ui/core'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
-import Autocomplete from '@material-ui/lab/Autocomplete'
 import Axios from 'axios'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import 'typeface-roboto'
 import AnketlerList from './AnketlerList.js'
@@ -25,6 +22,7 @@ import './App.css'
 import HeaderBar from './HeaderBar.js'
 import IdariKayitlarList from './IdariKayitlarList.js'
 import useStyles from './stiller/useStyles'
+import Filtreler from './filtreler/Filtreler'
 
 const SolaYasli = styled.div`
     flex: 1
@@ -36,10 +34,8 @@ const Wrapper = styled.div`
 
 function App() {
   console.debug('App Rendered!')
-  const [uretimSiklikList,setUretimSiklikList]=useState([])
-  const [cografiDuzeyList,setCografiDuzeyList]=useState([])
-  const [birimlerList,setBirimlerList]=useState([])
-  const [veriTuruList,setVeriTuruList]=useState([])
+  const classes = useStyles()
+
   const [secilenUretimSikliklar,setSecilenUretimSikliklar]=useState([])
   const [secilenCografiDuzeyler,setSecilenCografiDuzeyler]=useState([])
   const [secilenVeriTurleri,setSecilenVeriTurleri]=useState([])
@@ -66,11 +62,7 @@ function App() {
   useEffect(()=>{
     loadIstatistikiUrunList()
     loadHaberBulteniList()
-    loadUretimSiklikList()
-    loadCografiDuzeyList()
-    loadBirimlerList()
     loadKaynakKurumlarList()
-    loadVeriTurleri()
   },[])
 
   const filteredIstatistikiUrunList=useMemo(()=>{
@@ -93,24 +85,6 @@ function App() {
      loadIdariKayitlar()
      loadAnketler()
   },[selectedUrunKod,loadIstatistikiUrunDetayi,loadIdariKayitlar,loadAnketler])
-
-
-  function loadUretimSiklikList(){
-    Axios.get("/envanter/rapor/uretim_sikligi")
-    .then(response=>{
-          setUretimSiklikList(response.data)
-        }
-    )
-  }
-
-  function loadCografiDuzeyList(){
-    Axios.get("/envanter/rapor/cografi_duzey")
-    .then(response=>{
-          setCografiDuzeyList(response.data)
-        }
-    )
-  }
-
 
   function filterIstatistikiUrunList(){
     const secilenUretimSikliklarKodlar=secilenUretimSikliklar.map(data=>data.kod)
@@ -193,49 +167,26 @@ function App() {
     })
   }
 
-  function loadVeriTurleri(){
-    const list = [
-      {
-          kod:'1', ad:'Sayım - Örnekleme'
-      },
-      {
-          kod:'2', ad:'İdari kayıt'
-      }
-    ]
-    setVeriTuruList(list)
-  }
-  
-
-
-  function loadBirimlerList(){
-    Axios.post("/envanter/rapor/ik_birimler")
-    .then(response=>{
-          setBirimlerList(response.data)
-        }
-    )
-  }
-
-  const onUretimSiklikChange = (event, values) => {
+  const onUretimSiklikChange = useCallback((event, values) => {
     setSelectedUrunKod(null)
     setSelectedHaberBultenKod(null)
     setSelectedKaynakKurum(null)
     setSecilenUretimSikliklar(values)
-  }
+  }, [])
 
-  const onCografiDuzeyChange = (event, values) => {
+  const onCografiDuzeyChange = useCallback((event, values) => {
     setSelectedUrunKod(null)
     setSelectedHaberBultenKod(null)
     setSelectedKaynakKurum(null)
     setSecilenCografiDuzeyler(values)
-  }
+  }, [])
 
-  const onVeriTuruChange = (event, values) => {
+  const onVeriTuruChange = useCallback((event, values) => {
     setSelectedUrunKod(null)
     setSelectedHaberBultenKod(null)
     setSelectedKaynakKurum(null)
     setSecilenVeriTurleri(values)
-  }
-
+  }, [])
 
   const onUrunAramaChange = (event) => {
     setArananUrun(event.target.value)
@@ -261,7 +212,7 @@ function App() {
     setSelectedKaynakKurum(null)
   }
 
-  const handleBirimListToggle = (value) => () => {
+  const handleBirimListToggle = useCallback((value) => () => {
     setSelectedUrunKod(null)
     setSelectedHaberBultenKod(null)
 
@@ -273,7 +224,7 @@ function App() {
       checkedList.splice(currentIndex, 1);
     }
     setSecilenBirimList(checkedList)
-  }
+  }, [secilenBirimList])
 
   const handeClickIstatistikiUrunItem = (event,index) => {
     setSelectedHaberBultenKod(null)
@@ -322,106 +273,17 @@ function App() {
     
   }
 
-  const classes = useStyles()
-
   return (
     <div className={classes.mainDiv}>
         <HeaderBar />
-        <Grid container  className={classes.mainGrid}> 
-            <Grid item xs={2} className={classes.subGrid}>
-                <Grid item xs={12} className={classes.subGrid}>
-                    Üretim Sıklığı:
-                    <Autocomplete
-                      multiple
-                      size="small"
-                      id="tags-standard"
-                      options={uretimSiklikList}
-                      getOptionLabel={(option) => option.ad}
-                      onChange={onUretimSiklikChange}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="standard"
-                          placeholder="Üretim Sıklığı"
-                        />
-                      )}
-                    />
-                </Grid>
-                <Grid item xs={12} className={classes.subGrid}>
-                    <div><br></br></div>
-                </Grid>
-                <Grid item xs={12} className={classes.subGrid}>
-                    Veri Türü:
-                    <Autocomplete
-                      multiple
-                      id="tags-standard"
-                      options={veriTuruList}
-                      getOptionLabel={(option) => option.ad}
-                      onChange={onVeriTuruChange}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="standard"
-                          placeholder="Veri Türü"
-                        />
-                      )}
-                    />
-                </Grid>
-                <Grid item xs={12} className={classes.subGrid}>
-                    <div><br></br></div>
-                </Grid>
-                <Grid item xs={12} className={classes.subGrid}>
-                    Coğrafi Düzey:
-                    <Autocomplete
-                      multiple
-                      id="tags-standard"
-                      size="small"
-                      options={cografiDuzeyList}
-                      getOptionLabel={(option) => option.ad}
-                      onChange={onCografiDuzeyChange}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="standard"
-                          placeholder="Coğrafi Düzey"
-                        />
-                      )}
-                    />
-                </Grid>
-                <Grid item xs={12} className={classes.subGrid}>
-                    <div><br></br></div>
-                </Grid>
-                <Grid item xs={12} className={classes.subGrid}>
-                    Birimler:
-                    <Divider />
-                    <List className={classes.filterlist}>
-                      {birimlerList.map((value) => {
-                        const labelId = `checkbox-list-label-${value.ic_birim_kod}`;
+        <Grid container  className={classes.mainGrid}>
+            <Filtreler
+              secilenBirimList={secilenBirimList}
+              onUretimSiklikChange={onUretimSiklikChange}
+              onCografiDuzeyChange={onCografiDuzeyChange}
+              onVeriTuruChange={onVeriTuruChange}
+              handleBirimListToggle={handleBirimListToggle} />
 
-                        return (
-                          <ListItem key={value.id} dense button className={classes.filterlistitem}
-                            onClick={handleBirimListToggle(value)}>
-                            <ListItemIcon
-                              style={{minWidth:0, padding:2}}>
-                              <Checkbox
-                                edge="start"
-                                checked={secilenBirimList.indexOf(value) !== -1}
-                                tabIndex={-1}
-                                disableRipple
-                                inputProps={{ 'aria-labelledby': labelId }}
-                              />
-                            </ListItemIcon>
-                            <ListItemText
-                                disableTypography 
-                                id={labelId} 
-                                primary={value.adi}/>
-                          </ListItem>
-                        )
-                      })}
-                    </List>
-                </Grid>
-            </Grid>
-            
             <Grid item xs={10} className={classes.subGrid} container direction="row">
                 <Grid item xs={7} className={classes.subGrid} container direction="row">
                   <Grid item xs={6} className={classes.subGrid}>
