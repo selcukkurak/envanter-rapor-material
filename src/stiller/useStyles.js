@@ -6,7 +6,6 @@ export default makeStyles((theme) => ({
   },
   cardHeaderIstatistikiUrun: {
     color: '#5A6F7B',
-    fontSize: '0.8em',
     fontWeight: 'bold',
   },
 
@@ -15,13 +14,11 @@ export default makeStyles((theme) => ({
   },
   cardHeaderHaberBulteni: {
     color: '#5A6F7B',
-    fontSize: '0.8em',
     fontWeight: 'bold',
   },
 
   cardIstatistikiUrunDetay: {
     color: '#5A6F7B',
-    fontSize: '0.8em',
   },
 
   cardKaynakKurumlar: {
@@ -30,7 +27,6 @@ export default makeStyles((theme) => ({
 
   cardHeaderKaynakKurumlar: {
     color: '#5A6F7B',
-    fontSize: '0.8em',
     fontWeight: 'bold',
   },
 
@@ -43,7 +39,6 @@ export default makeStyles((theme) => ({
     height: 300,
     overflow: 'auto',
     paddingTop: 0,
-    fontSize: '0.9em',
     color: '#5A6F7B',
   },
 
@@ -51,7 +46,6 @@ export default makeStyles((theme) => ({
     height: 300,
     overflow: 'auto',
     paddingTop: 0,
-    fontSize: '0.9em',
     color: '#5A6F7B',
   },
 
@@ -59,7 +53,6 @@ export default makeStyles((theme) => ({
     maxHeight: 300,
     overflow: 'auto',
     paddingTop: 0,
-    fontSize: '0.9em',
     color: '#5A6F7B',
   },
   filterlist: {
@@ -70,13 +63,11 @@ export default makeStyles((theme) => ({
   filterlistitem: {
     paddingTop: 0,
     paddingBottom: 0,
-    color: '#157DBD',
-    fontSize:'0.7em',
-    margin: -15,
+    color: '#157DBD'
   },
   mainDiv: {
+    padding: 12,
     backgroundColor: '#EFEFEF',
-    flexGrow: 1,
   },
   mainGrid: {
     paddingTop: 50,
@@ -88,16 +79,13 @@ export default makeStyles((theme) => ({
     paddingRight: 5,
   },
   listitemUrun: {
-    fontSize: '0.9em',
   },
   istatistikiUrunDetayLabel: {
-    fontSize:'0.8em',
     fontWeight:'bold',
     color:'black',
     paddingTop:10
   },
   istatistikiUrunDetayValue: {
-    fontSize:'0.8em',
     color:'black',
     paddingTop:10
   },
@@ -107,7 +95,7 @@ export default makeStyles((theme) => ({
     flexShrink: 0,
   },
   avatarSmall: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+    width: 12,
+    height: 12,
   },
 }))
