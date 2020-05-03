@@ -1,21 +1,6 @@
-import {
-  Card,
-  CardContent,
-  Chip,
-  Divider,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  TextField,
-  Tooltip,
-  Typography
-} from '@material-ui/core'
-import HighlightOffIcon from '@material-ui/icons/HighlightOff'
+import { Card, CardContent, Divider, Grid, Typography } from '@material-ui/core'
 import Axios from 'axios'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import styled from 'styled-components'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import 'typeface-roboto'
 import AnketlerList from './AnketlerList.js'
 import './App.css'
@@ -23,14 +8,12 @@ import HeaderBar from './HeaderBar.js'
 import IdariKayitlarList from './IdariKayitlarList.js'
 import useStyles from './stiller/useStyles'
 import Filtreler from './filtreler/Filtreler'
-
-const SolaYasli = styled.div`
-    flex: 1
-`
-
-const Wrapper = styled.div`
-  display: flex
-`
+import useFilteredIstatistikiUrunList from './hook/useFilteredIstatistikiUrunList'
+import useFilteredHaberBulteniList from './hook/useFilteredHaberBulteniList'
+import useFilteredKaynakKurumlarList from './hook/useFilteredKaynakKurumlarList'
+import Liste from './listeler/Liste'
+import ListeItem from './listeler/ListeItem'
+import { AnketIkon, IdariKayitIkon } from './listeler/ikonlar'
 
 function App() {
   console.debug('App Rendered!')
@@ -41,131 +24,89 @@ function App() {
   const [secilenVeriTurleri,setSecilenVeriTurleri]=useState([])
   const [secilenBirimList, setSecilenBirimList] = useState([])
   
-  const [haberBulteniList,setHaberBulteniList]=useState([])
-  
-  //const [istatistikiUrunSayisi,setIstatistikiUrunSayisi]=useState()
   const [istatistikiUrunList,setIstatistikiUrunList]=useState([])
-  //const [filteredIstatistikiUrunList,setFilteredIstatistikiUrunList]=useState([])
   const [selectedUrunKod, setSelectedUrunKod] = useState(null)
   const [arananUrun, setArananUrun] = useState(null)
+
+  const [haberBulteniList,setHaberBulteniList]=useState([])
   const [selectedHaberBultenKod, setSelectedHaberBultenKod] = useState(null)
   const [arananHaberBulteni, setArananHaberBulteni] = useState(null)
-  const [arananKurum, setArananKurum] = useState(null)
-  
-  const [selectedKaynakKurum, setSelectedKaynakKurum] = useState(null)
 
   const [kaynakKurumlarList,setKaynakKurumlarList]=useState([])
+  const [selectedKaynakKurum, setSelectedKaynakKurum] = useState(null)
+  const [arananKurum, setArananKurum] = useState(null)
+
   const [istatistikiUrunDetay,setIstatistikiUrunDetay]=useState(null)
   const [idariKayitlar,setIdariKayitlar]=useState([])
   const [anketler,setAnketler]=useState([])
 
   useEffect(()=>{
-    loadIstatistikiUrunList()
-    loadHaberBulteniList()
-    loadKaynakKurumlarList()
-  },[])
-
-  const filteredIstatistikiUrunList=useMemo(()=>{
-    //setSelectedUrunKod(null)
-    return filterIstatistikiUrunList()
-  },[filterIstatistikiUrunList,arananUrun,selectedUrunKod,istatistikiUrunList,secilenUretimSikliklar,secilenCografiDuzeyler, secilenBirimList,secilenVeriTurleri,selectedHaberBultenKod,selectedKaynakKurum])
-  
-  const filteredHaberBulteniList=useMemo(
-    ()=>{
-    return filterHaberBulteniList()
-  },[filterHaberBulteniList,haberBulteniList, filteredIstatistikiUrunList,selectedUrunKod,arananHaberBulteni])
-
-  const filteredKaynakKurumlarList=useMemo(
-    ()=>{
-    return filterKaynakKurumList()
-  },[filterKaynakKurumList,kaynakKurumlarList, filteredIstatistikiUrunList,selectedUrunKod,arananKurum])
-
-  useEffect(()=>{
-     loadIstatistikiUrunDetayi()
-     loadIdariKayitlar()
-     loadAnketler()
-  },[selectedUrunKod,loadIstatistikiUrunDetayi,loadIdariKayitlar,loadAnketler])
-
-  function filterIstatistikiUrunList(){
-    const secilenUretimSikliklarKodlar=secilenUretimSikliklar.map(data=>data.kod)
-    const secilenCografiDuzeylerKodlar=secilenCografiDuzeyler.map(data=>data.kod)
-    const secilenBirimListKodlar=secilenBirimList.map(data=>data.id)
-    const secilenVeriTuruKodlar=secilenVeriTurleri.map(data=>data.kod)
-    
-    return istatistikiUrunList.filter(data=>{
-        return (secilenUretimSikliklarKodlar.length===0  || secilenUretimSikliklarKodlar.includes(Number(data.uretim_siklik)) )
-              && (secilenCografiDuzeylerKodlar.length===0  || secilenCografiDuzeylerKodlar.includes(Number(data.cografi_duzey_kod)))
-              && (secilenBirimListKodlar.length===0  || secilenBirimListKodlar.includes(data.ic_birim_kod))
-              && (secilenVeriTuruKodlar.length===0  || secilenVeriTuruKodlar.includes(data.veriTurleri.toString()))
-              && (!selectedHaberBultenKod || selectedHaberBultenKod===data.bulten_kod)
-              && (!selectedKaynakKurum || data.kaynak_kurumlar.toString().includes(selectedKaynakKurum))
-              && (!selectedUrunKod || selectedUrunKod===data.istatistiki_urun_kod)
-              && (!arananUrun || data.istatistiki_urun_ad.toLowerCase().includes(arananUrun.toLowerCase()))
-    })
-  }
-
-  function loadIstatistikiUrunList(){
-    Axios.post("/envanter/rapor/istatistiki_urunler")
-    .then(response=>{
+    Axios.get("/envanter/rapor/istatistiki_urunler")
+      .then(response=>{
           setIstatistikiUrunList(response.data)
         }
-    )
-  }
-
-  function filterHaberBulteniList(){
-    const secilenIstatistikiUrunKodlar=filteredIstatistikiUrunList.map(data=>data.bulten_kod)
-    const seciliUrun = filteredIstatistikiUrunList.find(data => data.istatistiki_urun_kod === selectedUrunKod)
-    return haberBulteniList.filter(data=>{
-        if(seciliUrun){
-          return (seciliUrun.bulten_kod === data.kod)
-        } else if(arananHaberBulteni){
-          return (data.ad.toLowerCase().includes(arananHaberBulteni.toLowerCase()))
-        } else{
-          return secilenIstatistikiUrunKodlar.includes(data.kod)
-        }
-    })
-  }
-
-  function loadHaberBulteniList(){
-    Axios.post("/envanter/rapor/haber_bultenleri")
-    .then(response=>{
+      )
+    Axios.get("/envanter/rapor/haber_bultenleri")
+      .then(response=>{
           setHaberBulteniList(response.data)
-          //setHaberBulteniSayisi(response.data.length)
         }
-    )
-  }
-
-
-  function loadKaynakKurumlarList(){
-    Axios.post("/envanter/rapor/idari_kayit_kaynak_kurumlar")
-    .then(response=>{
+      )
+    Axios.get("/envanter/rapor/idari_kayit_kaynak_kurumlar")
+      .then(response=>{
           setKaynakKurumlarList(response.data)
         }
-    )
-  }
+      )
+  },[])
 
-  function filterKaynakKurumList(){
-    const secilenIstatistikiUrunlerinKaynakKurumkodlar=filteredIstatistikiUrunList
-        .filter(data=> data.kaynak_kurumlar)
-        .flatMap(data=>data.kaynak_kurumlar)
-        //.filter(data => data)
-    //console.log('kodlar-->',secilenIstatistikiUrunlerinKaynakKurumkodlar)
-    const seciliUrun = filteredIstatistikiUrunList.find(data => data.istatistiki_urun_kod === selectedUrunKod)
-    //console.log('ürün kurumu-->',seciliUrun)
-    return kaynakKurumlarList.filter(data=>{
-        if(seciliUrun){
-          if(seciliUrun.kaynak_kurumlar){
-            return (seciliUrun.kaynak_kurumlar.includes(data.kod.toString()))
-          }else{
-            return false
+  useEffect(()=>{
+    console.debug('selectedUrunKod değişti: ', selectedUrunKod)
+    if (selectedUrunKod) {
+      Axios.get("/envanter/rapor/istatistiki_urunler/"+selectedUrunKod)
+        .then(response=>{
+            setIstatistikiUrunDetay(response.data)
           }
-        }else if(arananKurum){
-          return (data.ad.toLowerCase().includes(arananKurum.toLowerCase()))
-        } else{
-          return secilenIstatistikiUrunlerinKaynakKurumkodlar.includes(data.kod.toString())
-        }
-    })
-  }
+        )
+    }
+    if(selectedUrunKod){
+      Axios.get("/envanter/rapor/envanter_idari_kayitlar/"+selectedUrunKod)
+        .then(response=>{
+            setIdariKayitlar(response.data)
+          }
+        )
+    }
+    if(selectedUrunKod){
+      Axios.get("/envanter/rapor/envanter_anketler/"+selectedUrunKod)
+        .then(response=>{
+            setAnketler(response.data)
+          }
+        )
+    }
+  },[selectedUrunKod])
+
+  const filteredIstatistikiUrunList = useFilteredIstatistikiUrunList(
+    secilenUretimSikliklar,
+    secilenCografiDuzeyler,
+    secilenBirimList,
+    secilenVeriTurleri,
+    istatistikiUrunList,
+    selectedHaberBultenKod,
+    selectedKaynakKurum,
+    arananUrun
+  )
+
+  const filteredHaberBulteniList = useFilteredHaberBulteniList(
+    filteredIstatistikiUrunList,
+    selectedUrunKod,
+    haberBulteniList,
+    arananHaberBulteni
+  )
+
+  const filteredKaynakKurumlarList = useFilteredKaynakKurumlarList(
+    filteredIstatistikiUrunList,
+    selectedUrunKod,
+    kaynakKurumlarList,
+    arananKurum
+  )
 
   const onUretimSiklikChange = useCallback((event, values) => {
     setSelectedUrunKod(null)
@@ -188,29 +129,29 @@ function App() {
     setSecilenVeriTurleri(values)
   }, [])
 
-  const onUrunAramaChange = (event) => {
+  const onUrunAramaChange = useCallback((event) => {
     setArananUrun(event.target.value)
-  }
+  }, [])
 
-  const onHaberBulteniAramaChange = (event) => {
+  const onHaberBulteniAramaChange = useCallback((event) => {
     setArananHaberBulteni(event.target.value)
-  }
+  }, [])
 
-  const onKurumAramaChange = (event) => {
+  const onKurumAramaChange = useCallback((event) => {
     setArananKurum(event.target.value)
-  }
+  }, [])
 
-  const handleClickRemoveItem = (event) =>{
+  const handleClickRemoveItem = useCallback((event) =>{
     setSelectedUrunKod(null)
-  }
+  }, [])
 
-  const handleClickRemoveHaberBulteniItem = (event) =>{
+  const handleClickRemoveHaberBulteniItem = useCallback((event) =>{
     setSelectedHaberBultenKod(null)
-  }
+  }, [])
   
-  const handleClickRemoveKaynakKurumiItem = (event) =>{
+  const handleClickRemoveKaynakKurumiItem = useCallback((event) =>{
     setSelectedKaynakKurum(null)
-  }
+  }, [])
 
   const handleBirimListToggle = useCallback((value) => () => {
     setSelectedUrunKod(null)
@@ -226,52 +167,24 @@ function App() {
     setSecilenBirimList(checkedList)
   }, [secilenBirimList])
 
-  const handeClickIstatistikiUrunItem = (event,index) => {
+  const handeClickIstatistikiUrunItem = useCallback((event,index) => {
+    console.debug('selected item: ', index)
     setSelectedHaberBultenKod(null)
     setSelectedKaynakKurum(null)
     setSelectedUrunKod(index);
-  }
+  }, [])
 
-  const handeClickBultenItem = (event,index) => {
+  const handeClickBultenItem = useCallback((event,index) => {
     setSelectedUrunKod(null)
     setSelectedKaynakKurum(null)
     setSelectedHaberBultenKod(index);
-  }
+  }, [])
 
-  const handeClickKaynakKurumItem = (event,index) => {
+  const handeClickKaynakKurumItem = useCallback((event,index) => {
     setSelectedUrunKod(null)
     setSelectedHaberBultenKod(null)
     setSelectedKaynakKurum(index);
-  }
-
-  function loadIstatistikiUrunDetayi(){
-    Axios.post("/envanter/rapor/istatistiki_urunler/"+selectedUrunKod)
-    .then(response=>{
-          setIstatistikiUrunDetay(response.data)
-        }
-    )
-  }
-  
-  function loadIdariKayitlar(){
-    if(selectedUrunKod){
-      Axios.post("/envanter/rapor/envanter_idari_kayitlar/"+selectedUrunKod)
-      .then(response=>{
-            setIdariKayitlar(response.data)
-          }
-      )
-    }
-  }
-
-  function loadAnketler(){
-    if(selectedUrunKod){
-      Axios.post("/envanter/rapor/envanter_anketler/"+selectedUrunKod)
-      .then(response=>{
-            setAnketler(response.data)
-          }
-      )
-    }
-    
-  }
+  }, [])
 
   return (
     <div className={classes.mainDiv}>
@@ -286,144 +199,55 @@ function App() {
 
             <Grid item xs={10} className={classes.subGrid} container direction="row">
                 <Grid item xs={7} className={classes.subGrid} container direction="row">
-                  <Grid item xs={6} className={classes.subGrid}>
-                    <Card className={classes.cardIstatistikiUrun}>
-                        <CardContent>
-                          <div>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                <Wrapper className={classes.cardHeaderIstatistikiUrun}>
-                                    <SolaYasli>
-                                      {filteredIstatistikiUrunList.length} İstatistiki Ürün
-                                    </SolaYasli>
-                                    {selectedUrunKod && 
-                                      <IconButton color="secondary" onClick={handleClickRemoveItem}>
-                                        <HighlightOffIcon/>
-                                      </IconButton>}
-                                </Wrapper>
-                            </Typography>
-                            <TextField 
-                              label="Ürün Ara" 
-                              type="search"
-                              onChange={onUrunAramaChange}/>
-                          </div>
-                          <List dense className={classes.istatistikiUrunList}>
-                            {filteredIstatistikiUrunList.map((value) => {
-                              //const labelId = `checkbox-list-secondary-label-${value.istatistiki_urun_kod}`;
-                              return (
-                                <ListItem 
-                                    key={value.istatistiki_urun_kod} 
-                                    button
-                                    selected={selectedUrunKod===value.istatistiki_urun_kod}
-                                    onClick={(event) => handeClickIstatistikiUrunItem(event, value.istatistiki_urun_kod)}>
-                                  <ListItemText primary={value.istatistiki_urun_ad} 
-                                    className={classes.listitemUrun}
-                                    disableTypography/>
-                                  {
-                                    value.anket_durumu &&(
-                                      <Tooltip title="Anket">
-                                          <Chip variant="outlined" size="small"
-                                            label="a"/>
-                                      </Tooltip>
-                                    )
-                                  }
-                                  {
-                                    value.idari_kayit_durumu &&(
-                                      <Tooltip title="İdari Kayıt">
-                                          <Chip variant="outlined" size="small"
-                                            label="i"/>
-                                      </Tooltip>)
-                                  }  
-                                </ListItem>
-                              );
-                            })}
-                          </List>
-                        </CardContent>
-                    </Card>
-                  </Grid>
-                  <Grid item xs={6} className={classes.subGrid}>
-                    <Card className={classes.cardHaberBulteni}>
-                        <CardContent>
-                          <div>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                <Wrapper className={classes.cardHeaderHaberBulteni}>
-                                  <SolaYasli>
-                                    {filteredHaberBulteniList.length} Haber Bülteni
-                                  </SolaYasli>
-                                  {selectedHaberBultenKod && 
-                                    <IconButton onClick={handleClickRemoveHaberBulteniItem}>
-                                      <HighlightOffIcon 
-                                        color="secondary"/>
-                                    </IconButton>}
-                                </Wrapper>
-                            </Typography>
-                            <TextField 
-                              label="Bülten Ara" 
-                              type="search"
-                              onChange={onHaberBulteniAramaChange}/>
-                          </div>
-                          <List dense className={classes.haberBulteniList}>
-                            {filteredHaberBulteniList.map((value) => {
-                              const labelId = `checkbox-list-secondary-label-${value.kod}`;
-                              return (
-                                <ListItem key={value.kod} 
-                                  button
-                                  selected={selectedHaberBultenKod===value.kod}
-                                  onClick={(event) => handeClickBultenItem(event, value.kod)}>
-                                  <ListItemText id={labelId} primary={value.ad} 
-                                    className={classes.listitemUrun}
-                                    disableTypography/>
-                                </ListItem>
-                              );
-                            })}
-                          </List>
-                        </CardContent>
-                    </Card>
-                  </Grid>
-                  <Grid item xs={12}  className={classes.subGrid}>
-                    <Card className={classes.cardKaynakKurumlar}>
-                        <CardContent>
-                          <div>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                <Wrapper className={classes.cardHeaderKaynakKurumlar}>
-                                  <SolaYasli>
-                                    {filteredKaynakKurumlarList.length} Kaynak Kurum
-                                  </SolaYasli>
-                                  {selectedKaynakKurum && 
-                                    <IconButton onClick={handleClickRemoveKaynakKurumiItem}>
-                                      <HighlightOffIcon color="secondary" 
-                                      />
-                                    </IconButton>}
-                                </Wrapper>
-                            </Typography>
-                            <TextField 
-                              label="Kurum Ara" 
-                              type="search"
-                              onChange={onKurumAramaChange}/>
-                          </div>
-                          
-                          <List dense className={classes.kaynakKurumList}>
-                            {filteredKaynakKurumlarList.map((value) => {
-                              const labelId = `checkbox-list-secondary-label-${value.kod}`;
-                              return (
-                                <ListItem key={value.kod} 
-                                  button
-                                  selected={selectedKaynakKurum===value.kod}
-                                  onClick={(event) => handeClickKaynakKurumItem(event, value.kod)}>
-                                  <ListItemText id={labelId} primary={value.ad} 
-                                    className={classes.listitemUrun}
-                                    disableTypography/>
-                                </ListItem>
-                              );
-                            })}
-                          </List>
-                          
-                        </CardContent>
-                    </Card>
-                  </Grid> 
+                  <Liste
+                    title={filteredIstatistikiUrunList.length + ' İstatistiki Ürün'}
+                    selectedItem={selectedUrunKod}
+                    handleClickRemoveItem={handleClickRemoveItem}
+                    onAramaChange={onUrunAramaChange}
+                    items={filteredIstatistikiUrunList}
+                    itemRenderer={(value) => (
+                      <ListeItem
+                        key={value.istatistiki_urun_kod}
+                        selected={selectedUrunKod === value.istatistiki_urun_kod}
+                        onClick={(event) => handeClickIstatistikiUrunItem(event, value.istatistiki_urun_kod)}
+                        text={value.istatistiki_urun_ad}
+                        rightItems={(
+                          <Fragment>
+                            {value.anket_durumu && <AnketIkon />}
+                            {value.idari_kayit_durumu && <IdariKayitIkon />}
+                          </Fragment>
+                        )} />
+                    )} />
+                    <Liste
+                      title={filteredHaberBulteniList.length + ' Haber Bülteni'}
+                      selectedItem={selectedHaberBultenKod}
+                      handleClickRemoveItem={handleClickRemoveHaberBulteniItem}
+                      onAramaChange={onHaberBulteniAramaChange}
+                      items={filteredHaberBulteniList}
+                      itemRenderer={(value) => (
+                        <ListeItem
+                          key={value.kod}
+                          selected={selectedHaberBultenKod===value.kod}
+                          onClick={(event) => handeClickBultenItem(event, value.kod)}
+                          text={value.ad} />
+                      )} />
+                      <Liste
+                        title={filteredKaynakKurumlarList.length + ' Kaynak Kurum'}
+                        selectedItem={selectedKaynakKurum}
+                        handleClickRemoveItem={handleClickRemoveKaynakKurumiItem}
+                        onAramaChange={onKurumAramaChange}
+                        items={filteredKaynakKurumlarList}
+                        itemRenderer={(value) => (
+                          <ListeItem
+                            key={value.kod}
+                            selected={selectedKaynakKurum===value.kod}
+                            onClick={(event) => handeClickKaynakKurumItem(event, value.kod)}
+                            text={value.ad} />
+                        )} />
                 </Grid>
                 <Grid item xs={5} container direction="row" className={classes.subGrid}>
                   <Grid item xs={12}  className={classes.subGrid}>
-                    {selectedUrunKod &&(
+                    {istatistikiUrunDetay &&(
                       <Card className={classes.cardIstatistikiUrunDetay}>
                         <CardContent>
                           <Typography gutterBottom variant="h5" component="h2">
