@@ -20,7 +20,6 @@ function VeriTuruListesi () {
 
   return (
     <Grid item xs={12} className={classes.subGrid}>
-      Veri Türü:
       <Autocomplete
         multiple
         size='small'
@@ -30,8 +29,8 @@ function VeriTuruListesi () {
         renderInput={(params) => (
           <TextField
             {...params}
-            variant="standard"
-            placeholder="Veri Türü"
+            variant="outlined"
+            label="Veri Türü"
           />
         )}
       />

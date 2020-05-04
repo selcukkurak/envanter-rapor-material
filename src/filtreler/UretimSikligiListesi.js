@@ -26,7 +26,6 @@ function UretimSikligiListesi () {
 
   return (
     <Grid item xs={12} className={classes.subGrid}>
-      Üretim Sıklığı:
       <Autocomplete
         multiple
         size="small"
@@ -36,8 +35,8 @@ function UretimSikligiListesi () {
         renderInput={(params) => (
           <TextField
             {...params}
-            variant="standard"
-            placeholder="Üretim Sıklığı"
+            variant="outlined"
+            label="Üretim Sıklığı"
           />
         )}
       />

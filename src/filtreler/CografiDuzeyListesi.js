@@ -26,7 +26,6 @@ function CografiDuzeyListesi () {
 
   return (
     <Grid item xs={12} className={classes.subGrid}>
-      Coğrafi Düzey:
       <Autocomplete
         multiple
         size="small"
@@ -36,8 +35,8 @@ function CografiDuzeyListesi () {
         renderInput={(params) => (
           <TextField
             {...params}
-            variant="standard"
-            placeholder="Coğrafi Düzey"
+            variant="outlined"
+            label="Coğrafi Düzey"
           />
         )}
       />

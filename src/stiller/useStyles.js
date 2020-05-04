@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/core'
 
 export default makeStyles((theme) => ({
+  marginBottom: {
+    marginBottom: 24
+  },
   cardIstatistikiUrun: {
     background: '#D0D4D8',
   },
@@ -55,9 +58,17 @@ export default makeStyles((theme) => ({
     paddingTop: 0,
     color: '#5A6F7B',
   },
+  baslik: {
+    color: '#666666',
+    marginBottom: 12
+  },
+  birimlerBaslik: {
+    color: '#666666',
+    padding: '12px 16px'
+  },
   filterlist: {
     backgroundColor: theme.palette.background.paper,
-    maxHeight: 200,
+    maxHeight: 400,
     overflow: 'auto',
   },
   filterlistitem: {

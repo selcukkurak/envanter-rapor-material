@@ -1,8 +1,10 @@
-import { Checkbox, Divider, Grid, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { Checkbox, Grid, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import React, { memo, useEffect, useState } from 'react'
 import Axios from 'axios'
 import useStyles from '../stiller/useStyles'
 import { useSecilenBirimList } from '../store'
+import Card from '@material-ui/core/Card'
+import Typography from '@material-ui/core/Typography'
 
 function BirimlerListesi () {
   console.debug('BirimlerListesi Rendered!')
@@ -32,37 +34,38 @@ function BirimlerListesi () {
 
   return (
     <Grid item xs={12} className={classes.subGrid}>
-      Birimler:
-      <Divider />
-      <List className={classes.filterlist}>
-        {birimlerList.map((value) => {
-          const labelId = `checkbox-list-label-${value.ic_birim_kod}`;
+      <Card>
+        <Typography className={classes.birimlerBaslik}>Birimler</Typography>
+        <List className={classes.filterlist}>
+          {birimlerList.map((value) => {
+            const labelId = `checkbox-list-label-${value.ic_birim_kod}`;
 
-          return (
-            <ListItem
-              key={value.id}
-              dense
-              button
-              className={classes.filterlistitem}
-              onClick={handleToggle(value)}>
-              <ListItemIcon
-                style={{minWidth:0, padding:2}}>
-                <Checkbox
-                  edge="start"
-                  checked={secilenBirimList.indexOf(value) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ 'aria-labelledby': labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                disableTypography
-                id={labelId}
-                primary={value.adi}/>
-            </ListItem>
-          )
-        })}
-      </List>
+            return (
+              <ListItem
+                key={value.id}
+                dense
+                button
+                className={classes.filterlistitem}
+                onClick={handleToggle(value)}>
+                <ListItemIcon
+                  style={{minWidth:0, padding:2}}>
+                  <Checkbox
+                    edge="start"
+                    checked={secilenBirimList.indexOf(value) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  disableTypography
+                  id={labelId}
+                  primary={value.adi}/>
+              </ListItem>
+            )
+          })}
+        </List>
+      </Card>
     </Grid>
   )
 }
