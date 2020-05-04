@@ -2,11 +2,14 @@ import { Checkbox, Divider, Grid, List, ListItem, ListItemIcon, ListItemText } f
 import React, { memo, useEffect, useState } from 'react'
 import Axios from 'axios'
 import useStyles from '../stiller/useStyles'
+import { useSecilenBirimList } from '../store'
 
-function BirimlerListesi (props) {
+function BirimlerListesi () {
   console.debug('BirimlerListesi Rendered!')
   const classes = useStyles()
-  const [birimlerList,setBirimlerList]=useState([])
+
+  const [birimlerList,setBirimlerList] = useState([])
+  const [secilenBirimList, setSecilenBirimList] = useSecilenBirimList()
 
   useEffect(() => {
     Axios.post("/envanter/rapor/ik_birimler")
@@ -15,6 +18,17 @@ function BirimlerListesi (props) {
         }
       )
   }, [])
+
+  const handleToggle = (value) => () => {
+    const currentIndex = secilenBirimList.indexOf(value);
+    const checkedList = [...secilenBirimList];
+    if (currentIndex === -1) {
+      checkedList.push(value);
+    } else {
+      checkedList.splice(currentIndex, 1);
+    }
+    setSecilenBirimList(checkedList)
+  }
 
   return (
     <Grid item xs={12} className={classes.subGrid}>
@@ -25,13 +39,17 @@ function BirimlerListesi (props) {
           const labelId = `checkbox-list-label-${value.ic_birim_kod}`;
 
           return (
-            <ListItem key={value.id} dense button className={classes.filterlistitem}
-                      onClick={props.handleBirimListToggle(value)}>
+            <ListItem
+              key={value.id}
+              dense
+              button
+              className={classes.filterlistitem}
+              onClick={handleToggle(value)}>
               <ListItemIcon
                 style={{minWidth:0, padding:2}}>
                 <Checkbox
                   edge="start"
-                  checked={props.secilenBirimList.indexOf(value) !== -1}
+                  checked={secilenBirimList.indexOf(value) !== -1}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ 'aria-labelledby': labelId }}

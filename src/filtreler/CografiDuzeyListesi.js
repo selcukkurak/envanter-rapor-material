@@ -3,11 +3,14 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import React, { memo, useEffect, useState } from 'react'
 import Axios from 'axios'
 import useStyles from '../stiller/useStyles'
+import { useSecilenCografiDuzeyler } from '../store'
 
-function CografiDuzeyListesi (props) {
+function CografiDuzeyListesi () {
   console.debug('CografiDuzeyListesi Rendered!')
   const classes = useStyles()
-  const [cografiDuzeyList,setCografiDuzeyList]=useState([])
+
+  const [cografiDuzeyList, setCografiDuzeyList]=useState([])
+  const [, setSecilenCografiDuzeyler] = useSecilenCografiDuzeyler()
 
   useEffect(() => {
     Axios.get("/envanter/rapor/cografi_duzey")
@@ -17,6 +20,10 @@ function CografiDuzeyListesi (props) {
       )
   }, [])
 
+  const handleChange = (event, values) => {
+    setSecilenCografiDuzeyler(values)
+  }
+
   return (
     <Grid item xs={12} className={classes.subGrid}>
       Coğrafi Düzey:
@@ -25,7 +32,7 @@ function CografiDuzeyListesi (props) {
         size="small"
         options={cografiDuzeyList}
         getOptionLabel={(option) => option.ad}
-        onChange={props.onCografiDuzeyChange}
+        onChange={handleChange}
         renderInput={(params) => (
           <TextField
             {...params}

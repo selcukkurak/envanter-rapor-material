@@ -1,6 +1,9 @@
 import { useMemo } from 'react'
+import { useSelectedUrunKod } from '../store'
 
-export default function useFilteredHaberBulteniList (filteredIstatistikiUrunList, selectedUrunKod, haberBulteniList, arananHaberBulteni) {
+export default function useFilteredHaberBulteniList (filteredIstatistikiUrunList, haberBulteniList, arananHaberBulteni) {
+  const [selectedUrunKod] = useSelectedUrunKod()
+
   return useMemo(() => {
     const secilenIstatistikiUrunKodlar = filteredIstatistikiUrunList.map(data => data.bulten_kod)
     const seciliUrun = filteredIstatistikiUrunList.find(data => data.istatistiki_urun_kod === selectedUrunKod)

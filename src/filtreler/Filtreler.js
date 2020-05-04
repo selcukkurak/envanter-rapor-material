@@ -12,10 +12,10 @@ function Filtreler (props) {
 
   return (
     <Grid item xs={2} className={classes.subGrid}>
-      <UretimSikligiListesi onUretimSiklikChange={props.onUretimSiklikChange} />
-      <VeriTuruListesi onVeriTuruChange={props.onVeriTuruChange} />
-      <CografiDuzeyListesi onCografiDuzeyChange={props.onCografiDuzeyChange} />
-      <BirimlerListesi handleBirimListToggle={props.handleBirimListToggle} secilenBirimList={props.secilenBirimList} />
+      <UretimSikligiListesi />
+      <VeriTuruListesi />
+      <CografiDuzeyListesi />
+      <BirimlerListesi />
     </Grid>
   )
 }

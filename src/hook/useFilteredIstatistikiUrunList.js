@@ -1,6 +1,19 @@
 import { useMemo } from 'react'
+import {
+  useSecilenBirimList,
+  useSecilenCografiDuzeyler,
+  useSecilenUretimSikliklari,
+  useSecilenVeriTurleri, useSelectedHaberBulteni, useSelectedKaynakKurum
+} from '../store'
 
-export default function useFilteredIstatistikiUrunList (secilenUretimSikliklar, secilenCografiDuzeyler, secilenBirimList, secilenVeriTurleri, istatistikiUrunList, selectedHaberBultenKod, selectedKaynakKurum, arananUrun) {
+export default function useFilteredIstatistikiUrunList (istatistikiUrunList, arananUrun) {
+  const [secilenUretimSikliklar] = useSecilenUretimSikliklari()
+  const [secilenVeriTurleri] = useSecilenVeriTurleri()
+  const [secilenCografiDuzeyler] = useSecilenCografiDuzeyler()
+  const [secilenBirimList] = useSecilenBirimList()
+  const [selectedHaberBultenKod] = useSelectedHaberBulteni()
+  const [selectedKaynakKurum] = useSelectedKaynakKurum()
+
   return useMemo(() => {
     const secilenUretimSikliklarKodlar = secilenUretimSikliklar.map(data => data.kod)
     const secilenCografiDuzeylerKodlar = secilenCografiDuzeyler.map(data => data.kod)

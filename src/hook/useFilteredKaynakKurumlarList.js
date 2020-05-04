@@ -1,6 +1,9 @@
 import { useMemo } from 'react'
+import { useSelectedUrunKod } from '../store'
 
-export default function useFilteredKaynakKurumlarList (filteredIstatistikiUrunList, selectedUrunKod, kaynakKurumlarList, arananKurum) {
+export default function useFilteredKaynakKurumlarList (filteredIstatistikiUrunList, kaynakKurumlarList, arananKurum) {
+  const [selectedUrunKod] = useSelectedUrunKod()
+
   return useMemo(() => {
     const secilenIstatistikiUrunlerinKaynakKurumkodlar = filteredIstatistikiUrunList
       .filter(data => data.kaynak_kurumlar)
