@@ -1,6 +1,6 @@
 import { Card, CardContent, Grid, Typography } from '@material-ui/core'
-import IdariKayitlarList from '../IdariKayitlarList'
-import AnketlerList from '../AnketlerList'
+import IdariKayitlarList from './IdariKayitlarList'
+import AnketlerList from './AnketlerList'
 import React, { useEffect, useState } from 'react'
 import useStyles from '../stiller/useStyles'
 import { useSelectedUrunKod } from '../store'
