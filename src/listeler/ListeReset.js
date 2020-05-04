@@ -15,9 +15,9 @@ function ListeReset () {
   const [secilenCografiDuzeyler] = useSecilenCografiDuzeyler()
   const [secilenBirimList] = useSecilenBirimList()
 
-  const [selectedUrunKod, setSelectedUrunKod] = useSelectedUrunKod()
-  const [selectedHaberBultenKod, setSelectedHaberBultenKod] = useSelectedHaberBulteni()
-  const [selectedKaynakKurum, setSelectedKaynakKurum] = useSelectedKaynakKurum()
+  const [, setSelectedUrunKod] = useSelectedUrunKod()
+  const [, setSelectedHaberBultenKod] = useSelectedHaberBulteni()
+  const [, setSelectedKaynakKurum] = useSelectedKaynakKurum()
 
   useEffect(() => {
     console.debug('Listeleri Sıfırla')
@@ -33,15 +33,6 @@ function ListeReset () {
     setSelectedHaberBultenKod,
     setSelectedKaynakKurum
   ])
-
-  useEffect(() => {
-    setSelectedHaberBultenKod(null)
-    setSelectedKaynakKurum(null)
-  }, [selectedUrunKod])
-
-  useEffect(() => {
-    setSelectedUrunKod(null)
-  }, [selectedHaberBultenKod, selectedKaynakKurum])
 
   return null
 }
