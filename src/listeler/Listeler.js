@@ -37,7 +37,7 @@ function Listeler () {
   ] = useKaynakKurumlar(filteredIstatistikiUrunList)
 
   return (
-    <Grid item xs={7} className={classes.subGrid} container direction="row">
+    <Fragment>
       <Grid item xs={6} className={classes.subGrid}>
         <Liste
           title={filteredIstatistikiUrunList.length + ' İstatistiki Ürün'}
@@ -89,7 +89,7 @@ function Listeler () {
               text={value.ad} />
           )} />
       </Grid>
-    </Grid>
+    </Fragment>
   )
 }
 
