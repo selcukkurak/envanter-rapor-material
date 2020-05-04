@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useSelectedHaberBulteni } from '../store'
+import { useSelectedHaberBulteni } from '../../store'
 import Axios from 'axios'
 import useFilteredHaberBulteniList from './useFilteredHaberBulteniList'
 

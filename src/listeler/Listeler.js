@@ -4,9 +4,9 @@ import React, { Fragment, memo } from 'react'
 import { AnketIkon, IdariKayitIkon } from './ikonlar'
 import { Grid } from '@material-ui/core'
 import useStyles from '../stiller/useStyles'
-import useUrunler from '../hook/useUrunler'
-import useBultenler from '../hook/useBultenler'
-import useKaynakKurumlar from '../hook/useKaynakKurumlar'
+import useUrunler from './hook/useUrunler'
+import useBultenler from './hook/useBultenler'
+import useKaynakKurumlar from './hook/useKaynakKurumlar'
 
 function Listeler () {
   console.debug('Listeler Rendered!')

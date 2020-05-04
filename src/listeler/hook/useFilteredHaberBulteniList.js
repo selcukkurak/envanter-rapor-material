@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useSelectedUrunKod } from '../store'
+import { useSelectedUrunKod } from '../../store'
 
 export default function useFilteredHaberBulteniList (filteredIstatistikiUrunList, haberBulteniList, arananHaberBulteni) {
   const [selectedUrunKod] = useSelectedUrunKod()

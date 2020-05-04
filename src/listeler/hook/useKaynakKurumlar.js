@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useSelectedKaynakKurum } from '../store'
+import { useSelectedKaynakKurum } from '../../store'
 import Axios from 'axios'
 import useFilteredKaynakKurumlarList from './useFilteredKaynakKurumlarList'
 

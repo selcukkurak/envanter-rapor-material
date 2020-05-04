@@ -4,7 +4,7 @@ import {
   useSecilenCografiDuzeyler,
   useSecilenUretimSikliklari,
   useSecilenVeriTurleri, useSelectedHaberBulteni, useSelectedKaynakKurum
-} from '../store'
+} from '../../store'
 
 export default function useFilteredIstatistikiUrunList (istatistikiUrunList, arananUrun) {
   const [secilenUretimSikliklar] = useSecilenUretimSikliklari()

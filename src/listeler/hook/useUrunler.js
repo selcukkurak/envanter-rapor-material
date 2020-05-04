@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useSelectedUrunKod } from '../store'
+import { useSelectedUrunKod } from '../../store'
 import Axios from 'axios'
 import useFilteredIstatistikiUrunList from './useFilteredIstatistikiUrunList'
 
