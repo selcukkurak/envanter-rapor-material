@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useSelectedHaberBulteni } from '../../store'
+import { useSelectedHaberBulteni, useSelectedKaynakKurum, useSelectedUrunKod } from '../../store'
 import Axios from 'axios'
 import useFilteredHaberBulteniList from './useFilteredHaberBulteniList'
 
@@ -7,6 +7,8 @@ export default function useBultenler (filteredIstatistikiUrunList) {
   const [haberBulteniList, setHaberBulteniList] = useState([])
   const [arananHaberBulteni, setArananHaberBulteni] = useState(null)
   const [selectedHaberBultenKod, setSelectedHaberBultenKod] = useSelectedHaberBulteni()
+  const [, setSelectedUrunKod] = useSelectedUrunKod()
+  const [, setSelectedKaynakKurum] = useSelectedKaynakKurum()
 
   const filteredHaberBulteniList = useFilteredHaberBulteniList(
     filteredIstatistikiUrunList,
@@ -32,7 +34,9 @@ export default function useBultenler (filteredIstatistikiUrunList) {
 
   const handleClickBultenItem = useCallback((event,index) => {
     setSelectedHaberBultenKod(index);
-  }, [setSelectedHaberBultenKod])
+    setSelectedUrunKod(null)
+    setSelectedKaynakKurum(null)
+  }, [setSelectedUrunKod, setSelectedHaberBultenKod, setSelectedKaynakKurum])
 
   return [
     filteredHaberBulteniList,
