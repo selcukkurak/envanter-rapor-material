@@ -1,12 +1,10 @@
 import React, { memo } from 'react'
-import { Grid, TextField } from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import useStyles from '../stiller/useStyles'
 import { useSecilenVeriTurleri } from '../store'
 
 function VeriTuruListesi () {
   console.debug('VeriTuruListesi Rendered!')
-  const classes = useStyles()
 
   const [, setSecilenVeriTurleri] = useSecilenVeriTurleri()
   const veriTuruList = [
@@ -19,22 +17,20 @@ function VeriTuruListesi () {
   }
 
   return (
-    <Grid item xs={12} className={classes.subGrid}>
-      <Autocomplete
-        multiple
-        size='small'
-        options={veriTuruList}
-        getOptionLabel={(option) => option.ad}
-        onChange={handleChange}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            label="Veri Türü"
-          />
-        )}
-      />
-    </Grid>
+    <Autocomplete
+      multiple
+      size='small'
+      options={veriTuruList}
+      getOptionLabel={(option) => option.ad}
+      onChange={handleChange}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          variant="outlined"
+          label="Veri Türü"
+        />
+      )}
+    />
   )
 }
 

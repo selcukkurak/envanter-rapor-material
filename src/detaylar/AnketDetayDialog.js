@@ -46,7 +46,7 @@ export default function AnketDetayDialog(props) {
           {anketValue.anket_ad}
         </DialogTitle>
         <DialogContent dividers>
-          <Grid container item direction="row">
+          <Grid container item>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Periyodu:
              </Grid>

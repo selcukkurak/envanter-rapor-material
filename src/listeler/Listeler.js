@@ -38,45 +38,49 @@ function Listeler () {
 
   return (
     <Fragment>
-      <Grid item xs={6} className={classes.subGrid}>
-        <Liste
-          title={filteredIstatistikiUrunList.length + ' İstatistiki Ürün'}
-          selectedItem={selectedUrunKod}
-          handleClickRemoveItem={handleClickRemoveItem}
-          onAramaChange={onUrunAramaChange}
-          items={filteredIstatistikiUrunList}
-          itemRenderer={(value) => (
-            <ListeItem
-              key={value.istatistiki_urun_kod}
-              selected={selectedUrunKod === value.istatistiki_urun_kod}
-              onClick={(event) => handleClickIstatistikiUrunItem(event, value.istatistiki_urun_kod)}
-              text={value.istatistiki_urun_ad}
-              rightItems={(
-                <Fragment>
-                  {value.anket_durumu && <AnketIkon />}
-                  {value.idari_kayit_durumu && <IdariKayitIkon />}
-                </Fragment>
+      <Grid item xs>
+        <Grid container spacing={2}>
+          <Grid item xs>
+            <Liste
+              title={<Fragment><span className={classes.gosterge}>{filteredIstatistikiUrunList.length}</span>  İstatistiki Ürün</Fragment>}
+              selectedItem={selectedUrunKod}
+              handleClickRemoveItem={handleClickRemoveItem}
+              onAramaChange={onUrunAramaChange}
+              items={filteredIstatistikiUrunList}
+              itemRenderer={(value) => (
+                <ListeItem
+                  key={value.istatistiki_urun_kod}
+                  selected={selectedUrunKod === value.istatistiki_urun_kod}
+                  onClick={(event) => handleClickIstatistikiUrunItem(event, value.istatistiki_urun_kod)}
+                  text={value.istatistiki_urun_ad}
+                  rightItems={(
+                    <Fragment>
+                      {value.anket_durumu && <AnketIkon />}
+                      {value.idari_kayit_durumu && <IdariKayitIkon />}
+                    </Fragment>
+                  )} />
               )} />
-          )} />
+          </Grid>
+          <Grid item xs>
+            <Liste
+              title={<Fragment><span className={classes.gosterge}>{filteredHaberBulteniList.length}</span>  Haber Bülteni</Fragment>}
+              selectedItem={selectedHaberBultenKod}
+              handleClickRemoveItem={handleClickRemoveHaberBulteniItem}
+              onAramaChange={onHaberBulteniAramaChange}
+              items={filteredHaberBulteniList}
+              itemRenderer={(value) => (
+                <ListeItem
+                  key={value.kod}
+                  selected={selectedHaberBultenKod===value.kod}
+                  onClick={(event) => handleClickBultenItem(event, value.kod)}
+                  text={value.ad} />
+              )} />
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item xs={6} className={classes.subGrid}>
+      <Grid item xs>
         <Liste
-          title={filteredHaberBulteniList.length + ' Haber Bülteni'}
-          selectedItem={selectedHaberBultenKod}
-          handleClickRemoveItem={handleClickRemoveHaberBulteniItem}
-          onAramaChange={onHaberBulteniAramaChange}
-          items={filteredHaberBulteniList}
-          itemRenderer={(value) => (
-            <ListeItem
-              key={value.kod}
-              selected={selectedHaberBultenKod===value.kod}
-              onClick={(event) => handleClickBultenItem(event, value.kod)}
-              text={value.ad} />
-          )} />
-      </Grid>
-      <Grid item xs={12} className={classes.subGrid}>
-        <Liste
-          title={filteredKaynakKurumlarList.length + ' Kaynak Kurum'}
+          title={<Fragment><span className={classes.gosterge}>{filteredKaynakKurumlarList.length}</span>  Kaynak Kurum</Fragment>}
           selectedItem={selectedKaynakKurum}
           handleClickRemoveItem={handleClickRemoveKaynakKurumiItem}
           onAramaChange={onKurumAramaChange}

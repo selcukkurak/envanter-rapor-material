@@ -66,7 +66,7 @@ export default function IdariKayitDetayDialog(props) {
           {idarKayitValue.idari_kayit_ad}
         </DialogTitle>
         <DialogContent dividers>
-          <Grid container item direction="row">
+          <Grid container item>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 İçerik:
              </Grid>

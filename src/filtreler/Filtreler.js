@@ -1,20 +1,20 @@
-import { Grid } from '@material-ui/core'
-import React, { memo } from 'react'
+import React, { Fragment, memo } from 'react'
 import useStyles from '../stiller/useStyles'
 import UretimSikligiListesi from './UretimSikligiListesi'
 import VeriTuruListesi from './VeriTuruListesi'
 import CografiDuzeyListesi from './CografiDuzeyListesi'
 import BirimlerListesi from './BirimlerListesi'
+import Typography from '@material-ui/core/Typography'
 
 function Filtreler () {
   const classes = useStyles()
   console.debug('Filtreler Rendered!')
 
   return (
-    <Grid item xs={2} className={classes.subGrid}>
-      <h4 className={classes.baslik}>
+    <Fragment>
+      <Typography className={classes.filtrelerBaslik}>
         FİLTRELER
-      </h4>
+      </Typography>
       <div className={classes.marginBottom}>
         <UretimSikligiListesi />
       </div>
@@ -27,7 +27,7 @@ function Filtreler () {
       <div className={classes.marginBottom}>
         <BirimlerListesi />
       </div>
-    </Grid>
+    </Fragment>
   )
 }
 

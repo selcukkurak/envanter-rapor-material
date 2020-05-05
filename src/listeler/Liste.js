@@ -19,18 +19,18 @@ function Liste (props) {
     <Card className={classes.cardIstatistikiUrun}>
       <CardContent>
         <div>
-          <Typography gutterBottom variant="h5" component="h2">
-            <Wrapper className={classes.cardHeaderIstatistikiUrun}>
-              <SolaYasli>
+          <Wrapper>
+            <SolaYasli>
+              <Typography gutterBottom variant="h5" className={classes.cardHeaderIstatistikiUrun}>
                 {props.title}
-              </SolaYasli>
-              {props.selectedItem && (
-                <IconButton color="secondary" onClick={props.handleClickRemoveItem}>
-                  <HighlightOffIcon/>
-                </IconButton>
-              )}
-            </Wrapper>
-          </Typography>
+              </Typography>
+            </SolaYasli>
+            {props.selectedItem && (
+              <IconButton color="secondary" onClick={props.handleClickRemoveItem}>
+                <HighlightOffIcon/>
+              </IconButton>
+            )}
+          </Wrapper>
           <TextField
             label="Ara"
             type="search"

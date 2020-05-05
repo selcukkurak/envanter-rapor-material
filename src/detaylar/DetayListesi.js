@@ -41,8 +41,8 @@ function DetayListesi () {
           </div>
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          <Grid container direction="row">
-            <Grid item sm={12} container direction="row">
+          <Grid container>
+            <Grid item sm={12} container>
               <Grid item sm={12}>
                 {idariKayitlar.length>0 &&(
                   <div style={{fontWeight:'bold'}}>İdari Kayıtlar</div>

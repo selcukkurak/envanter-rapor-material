@@ -4,8 +4,11 @@ export default makeStyles((theme) => ({
   marginBottom: {
     marginBottom: 24
   },
+  gosterge: {
+    color: '#ab2328'
+  },
   cardIstatistikiUrun: {
-    background: '#D0D4D8',
+    width: '100%'
   },
   cardHeaderIstatistikiUrun: {
     color: '#5A6F7B',
@@ -13,24 +16,25 @@ export default makeStyles((theme) => ({
   },
 
   cardHaberBulteni: {
-    background: '#D0D4D8',
+    width: '100%'
   },
   cardHeaderHaberBulteni: {
     color: '#5A6F7B',
     fontWeight: 'bold',
   },
 
-  cardIstatistikiUrunDetay: {
-    color: '#5A6F7B',
-  },
-
   cardKaynakKurumlar: {
-    background: '#D0D4D8',
+    width: '100%'
   },
 
   cardHeaderKaynakKurumlar: {
     color: '#5A6F7B',
     fontWeight: 'bold',
+  },
+
+  cardIstatistikiUrunDetay: {
+    width: '100%',
+    color: '#5A6F7B',
   },
 
   list: {
@@ -58,13 +62,15 @@ export default makeStyles((theme) => ({
     paddingTop: 0,
     color: '#5A6F7B',
   },
-  baslik: {
+  filtrelerBaslik: {
     color: '#666666',
-    marginBottom: 12
+    padding: '12px 4px',
+    fontSize: '1.2em'
   },
   birimlerBaslik: {
-    color: '#666666',
-    padding: '12px 16px'
+    color: '#5A6F7B',
+    padding: '12px 16px',
+    fontSize: '1.1em'
   },
   filterlist: {
     backgroundColor: theme.palette.background.paper,
@@ -72,32 +78,17 @@ export default makeStyles((theme) => ({
     overflow: 'auto',
   },
   filterlistitem: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    color: '#157DBD'
-  },
-  mainDiv: {
-    padding: 12,
-    backgroundColor: '#EFEFEF',
-  },
-  mainGrid: {
-    paddingTop: 50,
-  },
-  subGrid: {
-    paddingLeft: 5,
-    paddingBottom: 5,
-    paddingTop: 5,
-    paddingRight: 5,
+    color: '#ab2328'
   },
   listitemUrun: {
   },
   istatistikiUrunDetayLabel: {
     fontWeight:'bold',
-    color:'black',
+    color:'#333333',
     paddingTop:10
   },
   istatistikiUrunDetayValue: {
-    color:'black',
+    color:'#333333',
     paddingTop:10
   },
   heading: {
