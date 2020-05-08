@@ -59,7 +59,7 @@ function BirimlerListesi () {
               <ListItemText
                 disableTypography
                 id={labelId}
-                primary={value.adi}/>
+                primary={value.ust_birim_adi}/>
             </ListItem>
           )
         })}
