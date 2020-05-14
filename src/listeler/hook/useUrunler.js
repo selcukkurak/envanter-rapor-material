@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useSelectedHaberBulteni, useSelectedKaynakKurum, useSelectedUrunKod } from '../../store'
+import { useSelectedHaberBulteni, useSelectedUrunKod } from '../../store'
 import Axios from 'axios'
 import useFilteredIstatistikiUrunList from './useFilteredIstatistikiUrunList'
 
@@ -8,7 +8,7 @@ export default function useUrunler () {
   const [arananUrun, setArananUrun] = useState(null)
   const [selectedUrunKod, setSelectedUrunKod] = useSelectedUrunKod()
   const [, setSelectedHaberBulteni] = useSelectedHaberBulteni()
-  const [, setSelectedKaynakKurum] = useSelectedKaynakKurum()
+  //const [, setSelectedKaynakKurum] = useSelectedKaynakKurum()
 
   const filteredIstatistikiUrunList = useFilteredIstatistikiUrunList(
     istatistikiUrunList,
@@ -34,8 +34,8 @@ export default function useUrunler () {
   const handleClickIstatistikiUrunItem = useCallback((event,index) => {
     setSelectedUrunKod(index);
     setSelectedHaberBulteni(null)
-    setSelectedKaynakKurum(null)
-  }, [setSelectedUrunKod, setSelectedHaberBulteni, setSelectedKaynakKurum])
+    //setSelectedKaynakKurum(null)
+  }, [setSelectedUrunKod, setSelectedHaberBulteni])
 
   return [
     filteredIstatistikiUrunList,

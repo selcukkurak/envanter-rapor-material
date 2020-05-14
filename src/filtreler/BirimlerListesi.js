@@ -14,7 +14,7 @@ function BirimlerListesi () {
   const [secilenBirimList, setSecilenBirimList] = useSecilenBirimList()
 
   useEffect(() => {
-    Axios.post("/envanter/rapor/ik_birimler")
+    Axios.post("/envanter/rapor/ik_ust_birimler")
       .then(response => {
           setBirimlerList(response.data)
         }
@@ -22,6 +22,7 @@ function BirimlerListesi () {
   }, [])
 
   const handleToggle = (value) => () => {
+    //console.log("Birim:",value)
     const currentIndex = secilenBirimList.indexOf(value);
     const checkedList = [...secilenBirimList];
     if (currentIndex === -1) {
@@ -37,11 +38,11 @@ function BirimlerListesi () {
       <Typography className={classes.birimlerBaslik}>Birimler</Typography>
       <List className={classes.filterlist}>
         {birimlerList.map((value) => {
-          const labelId = `checkbox-list-label-${value.ic_birim_kod}`;
+          const labelId = `checkbox-list-label-${value.ustBirimId}`;
 
           return (
             <ListItem
-              key={value.id}
+              key={value.ustBirimId}
               dense
               button
               className={classes.filterlistitem}

@@ -49,7 +49,7 @@ function UrunDetay () {
                   Daire Başkanlığı
                 </Grid>
                 <Grid item sm={9} className={classes.istatistikiUrunDetayValue}>
-                  {istatistikiUrunDetay.birim_adi}
+                  {istatistikiUrunDetay.ust_birim_adi}
                 </Grid>
               </Grid>
               <Grid item sm={12}>
