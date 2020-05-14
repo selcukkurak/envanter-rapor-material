@@ -2,7 +2,7 @@
   "name": "envanter-rapor",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:9090",
+  "proxy": "http://envanter-api.kube.tuik.gov.tr",
   "dependencies": {
     "@material-ui/core": "^4.9.10",
     "@material-ui/icons": "^4.9.1",
