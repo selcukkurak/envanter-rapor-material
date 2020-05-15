@@ -20,7 +20,7 @@ export default function useFilteredIstatistikiUrunList (istatistikiUrunList, ara
     const secilenBirimListKodlar = secilenBirimList.map(data => data.ustBirimId)
     const secilenVeriTuruKodlar = secilenVeriTurleri.map(data => data.kod)
     
-    //console.log("aranan ürün:",arananUrun)
+    console.log("aranan ürün:",arananUrun)
     //console.log("secBirim:",secilenBirimListKodlar)
     return istatistikiUrunList.filter(data => {
       return (secilenUretimSikliklarKodlar.length === 0 || secilenUretimSikliklarKodlar.includes(Number(data.uretim_siklik)))
@@ -29,7 +29,7 @@ export default function useFilteredIstatistikiUrunList (istatistikiUrunList, ara
         && (secilenVeriTuruKodlar.length === 0 || secilenVeriTuruKodlar.includes(data.veriTurleri.toString()))
         && (!selectedHaberBultenKod || selectedHaberBultenKod === data.bulten_kod)
         && (!selectedKaynakKurum || data.kaynak_kurumlar.includes(selectedKaynakKurum.toString()))
-        && (arananUrun !== '' || data.istatistiki_urun_ad.toLowerCase().includes(arananUrun.toLowerCase()))
+        && (!arananUrun || data.istatistiki_urun_ad.toLowerCase().includes(arananUrun.toLowerCase()))
     })
   }, [
     arananUrun,
