@@ -28,7 +28,7 @@ pipeline {
 
   post {
     success {
-      roket(grup: grup, imaj: imageName)
+      roket(grup: grup, imaj: "$imageName:$imageVersion")
     }
 
     failure {
