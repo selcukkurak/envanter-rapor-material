@@ -24,7 +24,7 @@ function Filtreler () {
       <div className={classes.marginBottom}>
         <CografiDuzeyListesi />
       </div>
-      <div className={classes.marginBottom}>
+      <div>
         <BirimlerListesi />
       </div>
     </Fragment>

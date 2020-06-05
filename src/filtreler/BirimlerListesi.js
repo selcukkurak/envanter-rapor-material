@@ -3,7 +3,6 @@ import React, { memo, useEffect, useState } from 'react'
 import Axios from 'axios'
 import useStyles from '../stiller/useStyles'
 import { useSecilenBirimList } from '../store'
-import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 
 function BirimlerListesi () {
@@ -34,9 +33,9 @@ function BirimlerListesi () {
   }
 
   return (
-    <Card>
+    <div>
       <Typography className={classes.birimlerBaslik}>Birimler</Typography>
-      <List className={classes.filterlist}>
+      <List>
         {birimlerList.map((value) => {
           const labelId = `checkbox-list-label-${value.ustBirimId}`;
 
@@ -58,14 +57,13 @@ function BirimlerListesi () {
                 />
               </ListItemIcon>
               <ListItemText
-                disableTypography
                 id={labelId}
                 primary={value.ust_birim_adi}/>
             </ListItem>
           )
         })}
       </List>
-    </Card>
+    </div>
   )
 }
 

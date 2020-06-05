@@ -72,11 +72,6 @@ export default makeStyles((theme) => ({
     padding: '12px 16px',
     fontSize: '1.1em'
   },
-  filterlist: {
-    backgroundColor: theme.palette.background.paper,
-    maxHeight: 400,
-    overflow: 'auto',
-  },
   filterlistitem: {
     color: '#ab2328'
   },
