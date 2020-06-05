@@ -3,27 +3,23 @@
  *
  * Aşamalar:
  *   - kodları derle
- *   - eğer commit etiketliyse (git tag)
- *     * imaj oluştur
- *     * imajı nexus'a gönder
- *     * yerel imajları sil (jenkinste durmasına gerek yok)
+ *   - imaj oluştur
+ *   - imajı nexus'a gönder
+ *   - yerel imajları sil (jenkinste durmasına gerek yok)
  *   - rocket chat'e mesaj gönder
  *
  * Projeye göre değiştirilecekler:
- *   - imageName: imajın grubu ve adı
- *   - channel: rocket chat mesajlarının gideceği grup adı
+ *   - grup: rocket chat mesajlarının gideceği grup adı
  * */
+ @Library('docker-shared-lib@master') _
+
 pipeline {
   environment {
-    registry = 'dockerhub.tuik.gov.tr'
-    imageName = "tuik/envanter-rapor"
+    imageName = ''
     imageVersion = ''
-    registryCredentials = 'nexus-gelistirici'
-    dockerImage = ''
-    channel = 'ybs_envanter'
+    grup = 'ybs_envanter'
     CI = 'true'
   }
-
   agent any
 
   triggers {
@@ -32,76 +28,29 @@ pipeline {
 
   post {
     success {
-      script {
-        updateGitlabCommitStatus name: 'build', state: 'success'
-        rocketSend channel: "$channel",
-                  rawMessage: true,
-                  message: """
-  :white_check_mark: `$registry/$imageName:$imageVersion` imajı hazırlandı
-  `:latest` olarak işaretlendi
-  İş Numarası: <$RUN_DISPLAY_URL|$BUILD_NUMBER>
-"""
-      }
+      roket(grup: grup, imaj: imageName)
     }
 
     failure {
-      script {
-        updateGitlabCommitStatus name: 'build', state: 'failed'
-        rocketSend channel: "$channel",
-                rawMessage: true,
-                message: """
-  :no_entry: Derleme başarısız oldu: $imageName
-  İş Numarası: <$RUN_DISPLAY_URL|$BUILD_NUMBER>
-"""
-      }
+      roket(grup: grup, fail: true)
     }
   }
 
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
         script {
-          docker.image('dockerhub.tuik.gov.tr/jenkins-node:12-alpine-tuikcert')
-                  .inside('-v /var/lib/jenkins/yarn-cache:/home/jenkins/.cache/yarn -u jenkins') {
-                    sh 'yarn && yarn build'
-                  }
+          def properties = projectProperties(npm: true)
+          imageName = 'tuik/' + properties.name
+          imageVersion = properties.version + "-$BUILD_NUMBER"
         }
+        npmBuild()
       }
     }
 
-    stage('prepare image') {
+    stage('Docker') {
       steps {
-        script {
-          def json = readJSON file: 'package.json'
-          def jsonVersion = json.version
-          imageVersion = "$jsonVersion-$BUILD_NUMBER"
-          dockerImage = docker.build imageName + ":$imageVersion"
-        }
-      }
-    }
-
-    stage('deploy image') {
-      steps {
-        script {
-          docker.withRegistry("http://$registry:5000", registryCredentials) {
-            dockerImage.push()
-            dockerImage.push('latest')
-          }
-        }
-      }
-    }
-
-    stage('remove unused image') {
-      steps {
-        script {
-          try {
-            sh "docker image rm $registry:5000/$imageName:$imageVersion"
-            sh "docker image rm $registry:5000/$imageName:latest"
-            sh "docker image rm $imageName:$imageVersion"
-          } catch (err) {
-            echo err.message
-          }
-        }
+        dockerBuild(imageName: imageName, version: imageVersion)
       }
     }
   }
