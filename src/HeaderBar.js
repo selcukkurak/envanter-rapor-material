@@ -26,7 +26,7 @@ export default function HeaderBar() {
             <img src={logo} width="40px" alt="banner" />
           </IconButton>
           <Typography variant="h6" color="inherit">
-            ENVANTER
+            İstatistiki Ürün Envanteri
           </Typography>
         </Toolbar>
       </AppBar>
