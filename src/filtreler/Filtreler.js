@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from 'react'
+import React, { memo } from 'react'
 import useStyles from '../stiller/useStyles'
 import UretimSikligiListesi from './UretimSikligiListesi'
 import VeriTuruListesi from './VeriTuruListesi'
@@ -11,7 +11,7 @@ function Filtreler () {
   console.debug('Filtreler Rendered!')
 
   return (
-    <Fragment>
+    <div className={classes.filtrelerTema}>
       <Typography className={classes.filtrelerBaslik}>
         FİLTRELER
       </Typography>
@@ -27,7 +27,7 @@ function Filtreler () {
       <div>
         <BirimlerListesi />
       </div>
-    </Fragment>
+    </div>
   )
 }
 

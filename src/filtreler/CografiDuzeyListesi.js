@@ -34,6 +34,10 @@ function CografiDuzeyListesi () {
           {...params}
           variant="outlined"
           label="Coğrafi Düzey"
+          InputLabelProps={{
+            style: {
+              color: 'white',
+            } }}
         />
       )}
     />

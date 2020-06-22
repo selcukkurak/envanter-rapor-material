@@ -63,17 +63,18 @@ export default makeStyles((theme) => ({
     color: '#5A6F7B',
   },
   filtrelerBaslik: {
-    color: '#666666',
+    color: '#ffffff',
     padding: '12px 4px',
     fontSize: '1.2em'
   },
   birimlerBaslik: {
-    color: '#5A6F7B',
+    color: '#fff',
     padding: '12px 16px',
-    fontSize: '1.1em'
+    fontSize: '1.3em',
+    textDecoration: 'underline'
   },
   filterlistitem: {
-    color: '#ab2328'
+    color: '#ffffff'
   },
   listitemUrun: {
   },
@@ -94,5 +95,8 @@ export default makeStyles((theme) => ({
   avatarSmall: {
     width: 12,
     height: 12,
+  },
+  filtrelerTema: {
+    backgroundColor: '#D22014',
   },
 }))

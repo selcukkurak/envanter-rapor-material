@@ -28,6 +28,10 @@ function VeriTuruListesi () {
           {...params}
           variant="outlined"
           label="Veri Türü"
+          InputLabelProps={{
+            style: {
+              color: 'white',
+            } }}
         />
       )}
     />

@@ -83,10 +83,10 @@ export default function IdariKayitDetayDialog(props) {
                 <Divider></Divider>
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
-                Kaynak Özet:
+                Kaynak Birim:
              </Grid>
              <Grid item xs={9}  className={classes.istatistikiUrunDetayValue}>
-                
+                {idarKayitValue.kaynak_birim}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -116,10 +116,41 @@ export default function IdariKayitDetayDialog(props) {
                 <Divider></Divider>
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
+                Veri Talep Biçimi:
+             </Grid>
+             <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
+                {idarKayitValue.veri_talep_bicimi_adi}
+             </Grid>
+             <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
+                Transfer Sıklık:
+             </Grid>
+             <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
+                {idarKayitValue.transfer_siklik_adi}
+             </Grid>
+             <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
+                <Divider></Divider>
+             </Grid>
+             <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
+                Coğrafi Düzeyi:
+             </Grid>
+             <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
+                {idarKayitValue.cografi_duzeyi}
+             </Grid>
+
+             <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
+                <Divider></Divider>
+             </Grid>
+             <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Aktarım Türü:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
                 {idarKayitValue.veri_aktarim_turu_adi}
+             </Grid>
+             <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
+                Transfer Sorumlu Birim:
+             </Grid>
+             <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
+                {idarKayitValue.transfer_sorumlu_birim_ad}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -154,6 +185,7 @@ export default function IdariKayitDetayDialog(props) {
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell>Adı</StyledTableCell>
+                                <StyledTableCell>Birim</StyledTableCell>
                                 <StyledTableCell>Telefon</StyledTableCell>
                                 <StyledTableCell>E-Posta</StyledTableCell>
                             </TableRow>
@@ -162,6 +194,7 @@ export default function IdariKayitDetayDialog(props) {
                         {idarKayitValue.iletisim_dis.map((row) => (
                             <TableRow key={row.name}>
                                 <TableCell>{row.iletisim_dis_ad_soyad}</TableCell>
+                                <TableCell>{row.iletisim_dis_birim}</TableCell>
                                 <TableCell>{row.iletisim_dis_telefon}</TableCell>
                                 <TableCell>{row.iletisim_dis_eposta}</TableCell>
                             </TableRow>

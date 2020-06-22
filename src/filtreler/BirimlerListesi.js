@@ -53,6 +53,7 @@ function BirimlerListesi () {
                   checked={secilenBirimList.indexOf(value) !== -1}
                   tabIndex={-1}
                   disableRipple
+                  style={{color: 'white'}}
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>

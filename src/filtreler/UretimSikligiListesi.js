@@ -34,6 +34,10 @@ function UretimSikligiListesi () {
           {...params}
           variant="outlined"
           label="Üretim Sıklığı"
+          InputLabelProps={{
+            style: {
+              color: 'white',
+            } }}
         />
       )}
     />
