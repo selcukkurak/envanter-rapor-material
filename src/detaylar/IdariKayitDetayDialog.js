@@ -131,16 +131,6 @@ export default function IdariKayitDetayDialog(props) {
                 <Divider></Divider>
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
-                Coğrafi Düzeyi:
-             </Grid>
-             <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.cografi_duzeyi}
-             </Grid>
-
-             <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
-                <Divider></Divider>
-             </Grid>
-             <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Aktarım Türü:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
@@ -179,8 +169,11 @@ export default function IdariKayitDetayDialog(props) {
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
              </Grid>
+             <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
+                 İletişim:
+             </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
-                <TableContainer title="İletişim">
+                <TableContainer>
                     <Table className={classes.table} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
@@ -197,6 +190,36 @@ export default function IdariKayitDetayDialog(props) {
                                 <TableCell>{row.iletisim_dis_birim}</TableCell>
                                 <TableCell>{row.iletisim_dis_telefon}</TableCell>
                                 <TableCell>{row.iletisim_dis_eposta}</TableCell>
+                            </TableRow>
+                        ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer> 
+             </Grid>
+             <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
+                <Divider></Divider>
+             </Grid>
+             <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
+                 Kurum İçi İletişim:
+             </Grid>
+             <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
+                <TableContainer>
+                    <Table className={classes.table} size="small" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell>Adı</StyledTableCell>
+                                <StyledTableCell>Birim</StyledTableCell>
+                                <StyledTableCell>Telefon</StyledTableCell>
+                                <StyledTableCell>E-Posta</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {idarKayitValue.iletisim_ic.map((row) => (
+                            <TableRow key={row.name}>
+                                <TableCell>{row.iletisim_ic_ad_soyad}</TableCell>
+                                <TableCell>{row.iletisim_ic_birim}</TableCell>
+                                <TableCell>{row.iletisim_ic_telefon}</TableCell>
+                                <TableCell>{row.iletisim_ic_eposta}</TableCell>
                             </TableRow>
                         ))}
                         </TableBody>
