@@ -5,6 +5,15 @@ import useStyles from '../stiller/useStyles'
 import { useSecilenBirimList } from '../store'
 import Typography from '@material-ui/core/Typography'
 
+function birimAdiKisalt (birim) {
+  return {
+    ...birim,
+    ust_birim_adi: birim.ust_birim_adi
+      .replace(' Daire Başkanlığı', '')
+      .replace(' Dai.bşk.lığı', '')
+  }
+}
+
 function BirimlerListesi () {
   console.debug('BirimlerListesi Rendered!')
   const classes = useStyles()
@@ -15,13 +24,12 @@ function BirimlerListesi () {
   useEffect(() => {
     Axios.post("/envanter/rapor/ik_ust_birimler")
       .then(response => {
-          setBirimlerList(response.data)
+          setBirimlerList(response.data.map(birimAdiKisalt))
         }
       )
   }, [])
 
   const handleToggle = (value) => () => {
-    //console.log("Birim:",value)
     const currentIndex = secilenBirimList.indexOf(value);
     const checkedList = [...secilenBirimList];
     if (currentIndex === -1) {
