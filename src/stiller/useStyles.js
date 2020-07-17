@@ -101,8 +101,6 @@ export default makeStyles((theme) => ({
     height: 12,
   },
   filtrelerTema: {
-    backgroundColor: '#D22014',
     padding: '60px 12px 12px',
-    height: '100%'
   },
 }))

@@ -21,6 +21,7 @@ const YanMenu = styled.div`
   left: 0;
   position: fixed;
   overflow-y: auto;
+  background-color: #D22014;
 `
 
 const OrtaBolme = styled.div`
