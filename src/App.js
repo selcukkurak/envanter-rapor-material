@@ -14,31 +14,40 @@ const Wrapper = styled.div`
     padding: 62px 16px 16px;
 `
 
-function App() {
-  console.debug('App Rendered!')
+const YanMenu = styled.div`
+  width: 320px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  overflow-y: auto;
+`
 
+const OrtaBolme = styled.div`
+  margin-left: 320px;
+`
+
+function App() {
   return (
     <Wrapper>
         <HeaderBar />
         <ListeReset />
-        <Grid container spacing={2}>
-            <Grid item xs={2}>
-              <Filtreler />
-            </Grid>
-            <Grid item xs={10}>
-              <Grid container spacing={2}>
-                <Grid item xs={7}>
-                  <Grid container direction="column" spacing={2}>
-                    <Listeler />
-                  </Grid>
-                </Grid>
-                <Grid item xs={5}>
-                  <UrunDetay />
-                  <DetayListesi />
-                </Grid>
+        <YanMenu>
+          <Filtreler />
+        </YanMenu>
+        <OrtaBolme>
+          <Grid container spacing={2}>
+            <Grid item xs={7}>
+              <Grid container direction="column" spacing={2}>
+                <Listeler />
               </Grid>
             </Grid>
-        </Grid>
+            <Grid item xs={5}>
+              <UrunDetay />
+              <DetayListesi />
+            </Grid>
+          </Grid>
+        </OrtaBolme>
     </Wrapper>
   );
 }
