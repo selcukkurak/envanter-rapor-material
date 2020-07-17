@@ -69,12 +69,14 @@ export default makeStyles((theme) => ({
   },
   birimlerBaslik: {
     color: '#fff',
-    padding: '12px 16px',
+    padding: '12px 4px',
     fontSize: '1.3em',
     textDecoration: 'underline'
   },
   filterlistitem: {
-    color: '#ffffff'
+    color: '#ffffff',
+    paddingLeft: 8,
+    paddingRight: 8
   },
   listitemUrun: {
   },
