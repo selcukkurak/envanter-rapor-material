@@ -9,9 +9,11 @@ import ListeReset from './listeler/ListeReset'
 import UrunDetay from './detaylar/UrunDetay'
 import DetayListesi from './detaylar/DetayListesi'
 import styled from 'styled-components'
+import { ThemeProvider } from '@material-ui/core'
+import theme from './stiller/theme'
 
 const Wrapper = styled.div`
-    padding: 62px 16px 16px;
+    padding: 62px 16px 0 16px;
 `
 
 const YanMenu = styled.div`
@@ -30,7 +32,8 @@ const OrtaBolme = styled.div`
 
 function App() {
   return (
-    <Wrapper>
+    <ThemeProvider theme={theme}>
+      <Wrapper>
         <HeaderBar />
         <ListeReset />
         <YanMenu>
@@ -49,7 +52,8 @@ function App() {
             </Grid>
           </Grid>
         </OrtaBolme>
-    </Wrapper>
+      </Wrapper>
+    </ThemeProvider>
   );
 }
 

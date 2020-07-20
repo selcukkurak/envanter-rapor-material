@@ -43,14 +43,13 @@ function BirimlerListesi () {
   return (
     <div>
       <Typography className={classes.birimlerBaslik}>Birimler</Typography>
-      <List>
+      <List dense>
         {birimlerList.map((value) => {
           const labelId = `checkbox-list-label-${value.ustBirimId}`;
 
           return (
             <ListItem
               key={value.ustBirimId}
-              dense
               button
               className={classes.filterlistitem}
               onClick={handleToggle(value)}>

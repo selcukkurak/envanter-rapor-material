@@ -74,11 +74,7 @@ export default makeStyles((theme) => ({
     textDecoration: 'underline'
   },
   filterlistitem: {
-    color: '#ffffff',
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 0,
-    paddingBottom: 0
+    color: '#ffffff'
   },
   listitemUrun: {
   },
