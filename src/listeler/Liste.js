@@ -3,6 +3,7 @@ import { Card, CardContent, IconButton, List, TextField, Typography } from '@mat
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import styled from 'styled-components'
 import useStyles from '../stiller/useStyles'
+import ReactList from 'react-list'
 
 const SolaYasli = styled.div`
     flex: 1
@@ -37,7 +38,9 @@ function Liste (props) {
             onChange={props.onAramaChange}/>
         </div>
         <List dense className={classes.istatistikiUrunList}>
-          {props.items.map(props.itemRenderer)}
+          <ReactList
+            itemRenderer={props.itemRenderer}
+            length={props.length} />
         </List>
       </CardContent>
     </Card>

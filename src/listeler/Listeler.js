@@ -48,20 +48,23 @@ function Listeler () {
               selectedItem={selectedUrunKod}
               handleClickRemoveItem={handleClickRemoveItem}
               onAramaChange={onUrunAramaChange}
-              items={filteredIstatistikiUrunList}
-              itemRenderer={(urun) => (
-                <ListeItem
-                  key={urun.id}
-                  selected={selectedUrunKod === urun.id}
-                  onClick={(event) => handleClickIstatistikiUrunItem(event, urun.id)}
-                  text={urun.adi}
-                  rightItems={(
-                    <Fragment>
-                      {urun.anket_durumu && <AnketIkon />}
-                      {urun.idari_kayit_durumu && <IdariKayitIkon />}
-                    </Fragment>
-                  )} />
-              )} />
+              length={filteredIstatistikiUrunList.length}
+              itemRenderer={(index, key) => {
+                const urun = filteredIstatistikiUrunList[index]
+                return (
+                  <ListeItem
+                    key={key}
+                    selected={selectedUrunKod === urun.id}
+                    onClick={(event) => handleClickIstatistikiUrunItem(event, urun.id)}
+                    text={urun.adi}
+                    rightItems={(
+                      <Fragment>
+                        {urun.anket_durumu && <AnketIkon />}
+                        {urun.idari_kayit_durumu && <IdariKayitIkon />}
+                      </Fragment>
+                    )} />
+                )
+              }} />
           </Grid>
           <Grid item xs>
             <Liste
@@ -69,14 +72,17 @@ function Listeler () {
               selectedItem={selectedHaberBultenKod}
               handleClickRemoveItem={handleClickRemoveHaberBulteniItem}
               onAramaChange={onHaberBulteniAramaChange}
-              items={siraliBultenler}
-              itemRenderer={(value) => (
-                <ListeItem
-                  key={value.id}
-                  selected={selectedHaberBultenKod===value.id}
-                  onClick={(event) => handleClickBultenItem(event, value.id)}
-                  text={value.adi} />
-              )} />
+              length={siraliBultenler.length}
+              itemRenderer={(index, key) => {
+                const bulten = siraliBultenler[index]
+                return (
+                  <ListeItem
+                    key={key}
+                    selected={selectedHaberBultenKod===bulten.id}
+                    onClick={(event) => handleClickBultenItem(event, bulten.id)}
+                    text={bulten.adi} />
+                )
+              }} />
           </Grid>
         </Grid>
       </Grid>
@@ -86,14 +92,17 @@ function Listeler () {
           selectedItem={selectedKaynakKurum}
           handleClickRemoveItem={handleClickRemoveKaynakKurumiItem}
           onAramaChange={onKurumAramaChange}
-          items={kaynakKurumlarList}
-          itemRenderer={(value) => (
-            <ListeItem
-              key={value.id}
-              selected={selectedKaynakKurum===value.id}
-              onClick={(event) => handleClickKaynakKurumItem(event, value.id)}
-              text={value.adi} />
-          )} />
+          length={kaynakKurumlarList.length}
+          itemRenderer={(index, key) => {
+            const kurum = kaynakKurumlarList[index]
+            return (
+              <ListeItem
+                key={key}
+                selected={selectedKaynakKurum===kurum.id}
+                onClick={(event) => handleClickKaynakKurumItem(event, kurum.id)}
+                text={kurum.adi} />
+            )
+          }} />
       </Grid>
     </Fragment>
   )
