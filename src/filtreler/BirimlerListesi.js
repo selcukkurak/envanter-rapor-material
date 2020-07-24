@@ -1,12 +1,9 @@
 import { Checkbox, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import React, { memo, useEffect, useMemo, useState } from 'react'
-import Axios from 'axios'
+import React, { memo, useMemo } from 'react'
 import useStyles from '../stiller/useStyles'
-import { useGlobalState, useSecilenBirimList } from '../store'
+import { useGlobalState } from '../store'
 import Typography from '@material-ui/core/Typography'
-import { turkishTitleCase } from '@tuik/util'
 import uniq from 'lodash/uniq'
-import keyBy from 'lodash/keyBy'
 import { localSort } from '../util/sort'
 
 function birimAdiKisalt (birim) {
@@ -18,28 +15,12 @@ function birimAdiKisalt (birim) {
   }
 }
 
-function birimAdiKucult (birim) {
-  return {
-    ...birim,
-    adi: turkishTitleCase(birim.adi)
-  }
-}
-
 function BirimlerListesi () {
-  console.debug('BirimlerListesi Rendered!')
   const classes = useStyles()
 
-  const [birimler,setBirimler] = useGlobalState('birimler')
-  const [secilenBirimList, setSecilenBirimList] = useSecilenBirimList()
   const [urunler] = useGlobalState('urunler')
-
-  useEffect(() => {
-    Axios.get("/api/birimler")
-      .then(response => {
-          setBirimler(keyBy(response.data.map(birimAdiKucult), 'id'))
-        }
-      )
-  }, [])
+  const [birimler] = useGlobalState('birimler')
+  const [seciliBirimler, setSeciliBirimler] = useGlobalState('seciliBirimler')
 
   const daireler = useMemo(() => {
     const urunBirimIdleri = uniq(urunler.map(urun => urun.birimId)) // listelenen ürünlerin tekil birim idlerini bul
@@ -54,14 +35,14 @@ function BirimlerListesi () {
   }, [urunler, birimler])
 
   const handleToggle = (value) => () => {
-    const currentIndex = secilenBirimList.indexOf(value);
-    const checkedList = [...secilenBirimList];
+    const currentIndex = seciliBirimler.indexOf(value);
+    const checkedList = [...seciliBirimler];
     if (currentIndex === -1) {
       checkedList.push(value);
     } else {
       checkedList.splice(currentIndex, 1);
     }
-    setSecilenBirimList(checkedList)
+    setSeciliBirimler(checkedList)
   }
 
   return (
@@ -81,7 +62,7 @@ function BirimlerListesi () {
                 style={{minWidth:0, padding:2}}>
                 <Checkbox
                   edge="start"
-                  checked={secilenBirimList.indexOf(birim) !== -1}
+                  checked={seciliBirimler.indexOf(birim) !== -1}
                   tabIndex={-1}
                   disableRipple
                   style={{color: 'white'}}

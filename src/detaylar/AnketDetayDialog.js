@@ -31,19 +31,27 @@ export default function AnketDetayDialog(props) {
 
  
   const classes = useStyles()
+
+  const ustDurumu = anketValue.ustDurumu
+    ? anketValue.ustDurumu === 1 ? 'Evet' : 'Hayır'
+    : 'Belirtilmemiş'
+
+  const harzemliDurumu = anketValue.harzemliDurumu
+    ? anketValue.harzemliDurumu === 1 ? 'Evet' : 'Hayır'
+    : 'Belirtilmemiş'
   return (
     <div>
       <Grid container onClick={handleClickOpen}>
         <Grid item xs={12} 
             style={{paddingTop:5, color:'#5A6F7B', textDecoration:'underline',fontSize:'0.9em'}}>
-            {anketValue.anket_ad}
+            {anketValue.adi}
         </Grid>
       </Grid>
       
 
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {anketValue.anket_ad}
+          {anketValue.adi}
         </DialogTitle>
         <DialogContent dividers>
           <Grid container item>
@@ -51,13 +59,13 @@ export default function AnketDetayDialog(props) {
                 Periyodu:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {anketValue.periyodu}
+                {anketValue.periyot ? anketValue.periyot.adi : '-'}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Veri Düzeyi:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {anketValue.veri_birim_duzeyi}
+                {anketValue.birimDuzeyi ? anketValue.birimDuzeyi.adi : '-'}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -66,13 +74,13 @@ export default function AnketDetayDialog(props) {
                 Örneklem Boyutu:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {anketValue.orneklem_sayisi}
+                {anketValue.orneklemSayisi}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Coğrafi Düzeyi:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                 {anketValue.cografi_duzeyi}
+                 {anketValue.cografiDuzey ? anketValue.cografiDuzey.adi : '-'}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -81,13 +89,13 @@ export default function AnketDetayDialog(props) {
                 Şeması:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {anketValue.calisma_sema}
+                {anketValue.sema}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Üst Durumu:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {anketValue.ust_durumu}
+                {ustDurumu}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -96,7 +104,7 @@ export default function AnketDetayDialog(props) {
                 Harzemli Durumu:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                 {anketValue.harzemli_durumu}
+                 {harzemliDurumu}
              </Grid>
           </Grid>
         </DialogContent>

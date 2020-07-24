@@ -16,7 +16,7 @@ import React from 'react'
 import { DialogActions, DialogContent, DialogTitle } from './dialog'
 
 export default function IdariKayitDetayDialog(props) {
-  const {idarKayitValue} = props  
+  const {idariKayitValue} = props
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -51,19 +51,18 @@ export default function IdariKayitDetayDialog(props) {
   }))(TableCell);
 
   const classes = useStyles()
+
   return (
     <div>
       <Grid container onClick={handleClickOpen}>
         <Grid item xs={12} 
             style={{paddingTop:5, color:'#5A6F7B', textDecoration:'underline',fontSize:'0.9em'}}>
-            {idarKayitValue.idari_kayit_ad}
+            {idariKayitValue.adi}
         </Grid>
       </Grid>
-      
-
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {idarKayitValue.idari_kayit_ad}
+          {idariKayitValue.adi}
         </DialogTitle>
         <DialogContent dividers>
           <Grid container item>
@@ -71,13 +70,13 @@ export default function IdariKayitDetayDialog(props) {
                 İçerik:
              </Grid>
              <Grid item xs={9}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.veri_icerik}
+                {idariKayitValue.icerik}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Kaynak Kurum:
              </Grid>
              <Grid item xs={9}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.kaynak_kurum_adi}
+                {idariKayitValue.kaynakKurumAdi}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -86,7 +85,7 @@ export default function IdariKayitDetayDialog(props) {
                 Kaynak Birim:
              </Grid>
              <Grid item xs={9}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.kaynak_birim}
+                {idariKayitValue.kaynakBirim}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -95,7 +94,7 @@ export default function IdariKayitDetayDialog(props) {
                 Yasal Hükümler:
              </Grid>
              <Grid item xs={9}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.yasal_hukum}
+                {idariKayitValue.yasalHukum}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -104,13 +103,13 @@ export default function IdariKayitDetayDialog(props) {
                 Veri Biçimi:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.veri_bicimi_adi}
+                {idariKayitValue.bicim ? idariKayitValue.bicim.adi : '-'}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Düzey:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.veri_duzeyi_adi}
+                {idariKayitValue.veriDuzeyi ? idariKayitValue.veriDuzeyi.adi : '-'}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -119,13 +118,13 @@ export default function IdariKayitDetayDialog(props) {
                 Veri Talep Biçimi:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.veri_talep_bicimi_adi}
+                {idariKayitValue.talepBicimi ? idariKayitValue.talepBicimi.adi : '-'}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Transfer Sıklık:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.transfer_siklik_adi}
+                {idariKayitValue.transferPeriyot ? idariKayitValue.transferPeriyot.adi : '-'}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -134,13 +133,13 @@ export default function IdariKayitDetayDialog(props) {
                 Aktarım Türü:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.veri_aktarim_turu_adi}
+                {idariKayitValue.aktarimTuru ? idariKayitValue.aktarimTuru.adi : '-'}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Transfer Sorumlu Birim:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.transfer_sorumlu_birim_ad}
+                {idariKayitValue.transferdenSorumluBirim}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -149,13 +148,13 @@ export default function IdariKayitDetayDialog(props) {
                 Hedef TÜİK Veritabanı:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.verinin_tutuldugu_veritabani}
+                {idariKayitValue.veritabani}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Hedef TÜİK Şema:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.verinin_tutuldugu_sema}
+                {idariKayitValue.sema}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -164,7 +163,7 @@ export default function IdariKayitDetayDialog(props) {
                 İletişim E-posta Grubu:
              </Grid>
              <Grid item xs={9}  className={classes.istatistikiUrunDetayValue}>
-                {idarKayitValue.eposta_grup}
+                {idariKayitValue.epostaGruplari}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -184,12 +183,12 @@ export default function IdariKayitDetayDialog(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        {idarKayitValue.iletisim_dis.map((row) => (
+                        {idariKayitValue.iletisimKisileri.filter(kisi => kisi.kurumDisi).map((row) => (
                             <TableRow key={row.name}>
-                                <TableCell>{row.iletisim_dis_ad_soyad}</TableCell>
-                                <TableCell>{row.iletisim_dis_birim}</TableCell>
-                                <TableCell>{row.iletisim_dis_telefon}</TableCell>
-                                <TableCell>{row.iletisim_dis_eposta}</TableCell>
+                                <TableCell>{row.adSoyad}</TableCell>
+                                <TableCell>{row.disBirimAdi}</TableCell>
+                                <TableCell>{row.telefon}</TableCell>
+                                <TableCell>{row.eposta}</TableCell>
                             </TableRow>
                         ))}
                         </TableBody>
@@ -199,33 +198,33 @@ export default function IdariKayitDetayDialog(props) {
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
              </Grid>
-             <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
-                 Kurum İçi İletişim:
-             </Grid>
-             <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
-                <TableContainer>
-                    <Table className={classes.table} size="small" aria-label="a dense table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>Adı</StyledTableCell>
-                                <StyledTableCell>Birim</StyledTableCell>
-                                <StyledTableCell>Telefon</StyledTableCell>
-                                <StyledTableCell>E-Posta</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                        {idarKayitValue.iletisim_ic.map((row) => (
-                            <TableRow key={row.name}>
-                                <TableCell>{row.iletisim_ic_ad_soyad}</TableCell>
-                                <TableCell>{row.iletisim_ic_birim}</TableCell>
-                                <TableCell>{row.iletisim_ic_telefon}</TableCell>
-                                <TableCell>{row.iletisim_ic_eposta}</TableCell>
-                            </TableRow>
-                        ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer> 
-             </Grid>
+            <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
+              Kurum İçi İletişim:
+            </Grid>
+            <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
+              <TableContainer>
+                <Table className={classes.table} size="small" aria-label="a dense table">
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>Adı</StyledTableCell>
+                      <StyledTableCell>Birim</StyledTableCell>
+                      <StyledTableCell>Telefon</StyledTableCell>
+                      <StyledTableCell>E-Posta</StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {idariKayitValue.iletisimKisileri.filter(kisi => !kisi.kurumDisi).map((row) => (
+                      <TableRow key={row.name}>
+                        <TableCell>{row.adSoyad}</TableCell>
+                        <TableCell>{row.birimId}</TableCell>
+                        <TableCell>{row.telefon}</TableCell>
+                        <TableCell>{row.eposta}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>

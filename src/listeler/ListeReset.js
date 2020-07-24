@@ -1,5 +1,5 @@
 import {
-  useSecilenBirimList,
+  useGlobalState,
   useSecilenCografiDuzeyler,
   useSecilenUretimSikliklari,
   useSecilenVeriTurleri,
@@ -13,7 +13,7 @@ function ListeReset () {
   const [secilenUretimSikliklar] = useSecilenUretimSikliklari()
   const [secilenVeriTurleri] = useSecilenVeriTurleri()
   const [secilenCografiDuzeyler] = useSecilenCografiDuzeyler()
-  const [secilenBirimList] = useSecilenBirimList()
+  const [secilenBirimList] = useGlobalState('seciliBirimler')
 
   const [, setSelectedUrunKod] = useSelectedUrunKod()
   const [, setSelectedHaberBultenKod] = useSelectedHaberBulteni()

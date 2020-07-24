@@ -1,9 +1,9 @@
-import { Card, CardContent, Grid, Typography } from '@material-ui/core'
+import { Card, CardContent, Typography } from '@material-ui/core'
 import IdariKayitlarList from './IdariKayitlarList'
 import AnketlerList from './AnketlerList'
 import React, { useEffect, useState } from 'react'
 import useStyles from '../stiller/useStyles'
-import { useSelectedUrunKod } from '../store'
+import { useGlobalState } from '../store'
 import Axios from 'axios'
 
 function DetayListesi () {
@@ -11,57 +11,41 @@ function DetayListesi () {
 
   const [idariKayitlar,setIdariKayitlar]=useState([])
   const [anketler,setAnketler]=useState([])
-  const [selectedUrunKod] = useSelectedUrunKod()
+  const [seciliUrunId] = useGlobalState('seciliUrunId')
 
   useEffect(() => {
-    if(selectedUrunKod) {
-      Axios.get("/envanter/rapor/envanter_idari_kayitlar/"+selectedUrunKod)
-        .then(response => {
-            setIdariKayitlar(response.data)
-          }
-        )
+    if(seciliUrunId) {
+      Axios.get(`/api/urunler/${seciliUrunId}/idari-kayitlar`)
+        .then(response => setIdariKayitlar(response.data))
     }
-    if(selectedUrunKod){
-      Axios.get("/envanter/rapor/envanter_anketler/"+selectedUrunKod)
-        .then(response => {
-            setAnketler(response.data)
-          }
-        )
+    if(seciliUrunId){
+      Axios.get(`/api/urunler/${seciliUrunId}/anketler`)
+        .then(response => setAnketler(response.data))
     }
-  },[selectedUrunKod])
+  },[seciliUrunId])
 
   if (anketler.length === 0 && idariKayitlar.length === 0) return null
 
   return (
     <Card className={classes.cardIstatistikiUrunDetay}>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          <div className={classes.cardIstatistikiUrunDetay}>
-            VERİ KAYNAKLARI
+        <div className={classes.cardIstatistikiUrunDetay}>
+          <Typography gutterBottom variant="h5" component="h5">
+            GİRDİLER
+          </Typography>
+        </div>
+        {idariKayitlar.length > 0 && (
+          <div>
+            <div style={{fontWeight:'bold'}}>İdari Kayıtlar</div>
+            <IdariKayitlarList idariKayitlar={idariKayitlar} classes={classes} />
           </div>
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          <Grid container>
-            <Grid item sm={12} container>
-              <Grid item sm={12}>
-                {idariKayitlar.length>0 &&(
-                  <div style={{fontWeight:'bold'}}>İdari Kayıtlar</div>
-                )}
-              </Grid>
-              <Grid item sm={12}>
-                <IdariKayitlarList datas={idariKayitlar} classes={classes} />
-              </Grid>
-              <Grid item sm={12}>
-                {anketler.length>0 &&(
-                  <div style={{fontWeight:'bold'}}>Anketler</div>
-                )}
-              </Grid>
-              <Grid item sm={12}>
-                <AnketlerList datas={anketler} classes={classes} />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Typography>
+        )}
+        {anketler.length > 0 && (
+          <div>
+            <div style={{fontWeight:'bold'}}>Anketler</div>
+            <AnketlerList anketler={anketler} classes={classes} />
+          </div>
+        )}
       </CardContent>
     </Card>
   )

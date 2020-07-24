@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useSelectedHaberBulteni, useSelectedKaynakKurum, useSelectedUrunKod } from '../../store'
-import Axios from 'axios'
+import { useCallback, useMemo, useState } from 'react'
+import { useGlobalState, useSelectedHaberBulteni, useSelectedKaynakKurum, useSelectedUrunKod } from '../../store'
 import groupBy from 'lodash/groupBy'
 import maxBy from 'lodash/maxBy'
 import useFilteredHaberBulteniList from './useFilteredHaberBulteniList'
 
 export default function useBultenler (filteredIstatistikiUrunList) {
-  const [haberBulteniList, setHaberBulteniList] = useState([])
+  const [bultenler] = useGlobalState('bultenler')
   const [arananHaberBulteni, setArananHaberBulteni] = useState(null)
   const [selectedHaberBultenKod, setSelectedHaberBultenKod] = useSelectedHaberBulteni()
   const [, setSelectedUrunKod] = useSelectedUrunKod()
@@ -14,25 +13,17 @@ export default function useBultenler (filteredIstatistikiUrunList) {
 
   const filteredHaberBulteniList = useFilteredHaberBulteniList(
     filteredIstatistikiUrunList,
-    haberBulteniList,
+    bultenler,
     arananHaberBulteni
   )
 
-  useEffect(() => {
-    Axios.get("/api/bultenler")
-      .then(response=>{
-          setHaberBulteniList(response.data)
-        }
-      )
-  }, [])
 
-
-  const gruplanmisBultenler = useMemo(() => groupBy(haberBulteniList, 'id'), [haberBulteniList])
+  const gruplanmisBultenler = useMemo(() => groupBy(bultenler, 'id'), [bultenler])
   const siraliBultenler = useMemo(() => {
     return Object.keys(gruplanmisBultenler)
       .map(id => maxBy(gruplanmisBultenler[id], bulten => bulten.sonYayin.id))
       .sort((a, b) => a.adi.localeCompare(b.adi))
-  }, [haberBulteniList])
+  }, [bultenler])
 
   const onHaberBulteniAramaChange = useCallback((event) => {
     setArananHaberBulteni(event.target.value)

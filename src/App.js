@@ -11,6 +11,10 @@ import DetayListesi from './detaylar/DetayListesi'
 import styled from 'styled-components'
 import { ThemeProvider } from '@material-ui/core'
 import theme from './stiller/theme'
+import ReferansLoader from './loader/ReferansLoader'
+import UrunLoader from './loader/UrunLoader'
+import BultenLoader from './loader/BultenLoader'
+import BirimLoader from './loader/BirimLoader'
 
 const Wrapper = styled.div`
     padding: 62px 16px 0 16px;
@@ -33,6 +37,10 @@ const OrtaBolme = styled.div`
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <UrunLoader />
+      <BultenLoader />
+      <ReferansLoader />
+      <BirimLoader />
       <Wrapper>
         <HeaderBar />
         <ListeReset />

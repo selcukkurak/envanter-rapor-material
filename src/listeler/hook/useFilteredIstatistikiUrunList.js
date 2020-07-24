@@ -1,16 +1,18 @@
 import { useMemo } from 'react'
 import {
-  useSecilenBirimList,
+  useGlobalState,
   useSecilenCografiDuzeyler,
   useSecilenUretimSikliklari,
-  useSecilenVeriTurleri, useSelectedHaberBulteni, useSelectedKaynakKurum
+  useSecilenVeriTurleri,
+  useSelectedHaberBulteni,
+  useSelectedKaynakKurum
 } from '../../store'
 
 export default function useFilteredIstatistikiUrunList (istatistikiUrunList, arananUrun) {
   const [secilenUretimSikliklar] = useSecilenUretimSikliklari()
   const [secilenVeriTurleri] = useSecilenVeriTurleri()
   const [secilenCografiDuzeyler] = useSecilenCografiDuzeyler()
-  const [secilenBirimList] = useSecilenBirimList()
+  const [secilenBirimList] = useGlobalState('seciliBirimler')
   const [selectedHaberBultenKod] = useSelectedHaberBulteni()
   const [selectedKaynakKurum] = useSelectedKaynakKurum()
 
@@ -19,9 +21,7 @@ export default function useFilteredIstatistikiUrunList (istatistikiUrunList, ara
     const secilenCografiDuzeylerKodlar = secilenCografiDuzeyler.map(data => data.id)
     const secilenBirimListKodlar = secilenBirimList.map(data => data.ustBirimId)
     const secilenVeriTuruKodlar = secilenVeriTurleri.map(data => data.id)
-    
-    //console.log("aranan ürün:",arananUrun)
-    //console.log("secBirim:",secilenBirimListKodlar)
+
     return istatistikiUrunList.filter(data => {
       var veriKoduVarmi=true
       if(secilenVeriTuruKodlar){
@@ -32,8 +32,6 @@ export default function useFilteredIstatistikiUrunList (istatistikiUrunList, ara
           veriKoduVarmi=data.veriTurleri.toString().includes(secilenVeriTuruKodlar[0])
         }
       }
-
-      //&& (secilenVeriTuruKodlar.length === 0 || secilenVeriTuruKodlar.includes(data.veriTurleri.toString()))
       
       return (secilenUretimSikliklarKodlar.length === 0 || secilenUretimSikliklarKodlar.includes(Number(data.uretim_siklik)))
         && (secilenCografiDuzeylerKodlar.length === 0 || secilenCografiDuzeylerKodlar.includes(Number(data.cografi_duzey_kod)))
