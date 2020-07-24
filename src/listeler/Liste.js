@@ -39,6 +39,7 @@ function Liste (props) {
         </div>
         <List dense className={classes.istatistikiUrunList}>
           <ReactList
+            type='variable'
             itemRenderer={props.itemRenderer}
             length={props.length} />
         </List>
