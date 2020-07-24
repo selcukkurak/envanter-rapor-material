@@ -1,6 +1,8 @@
 import { createGlobalState } from 'react-hooks-global-state'
 
 const initialState = {
+  urunler: [],
+  birimler: {},
   selectedUrunKod: null,
   selectedHaberBulteni: null,
   selectedKaynakKurum: null,

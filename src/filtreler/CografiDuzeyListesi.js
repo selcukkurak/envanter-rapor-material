@@ -27,7 +27,7 @@ function CografiDuzeyListesi () {
       multiple
       size="small"
       options={cografiDuzeyList}
-      getOptionLabel={(option) => option.ad}
+      getOptionLabel={(option) => option.adi}
       onChange={handleChange}
       renderInput={(params) => (
         <TextField

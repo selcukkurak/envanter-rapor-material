@@ -14,14 +14,14 @@ export default function useFilteredKaynakKurumlarList (filteredIstatistikiUrunLi
     return kaynakKurumlarList.filter(data => {
       if (seciliUrun) {
         if (seciliUrun.kaynak_kurumlar) {
-          return (seciliUrun.kaynak_kurumlar.includes(data.kod.toString()))
+          return (seciliUrun.kaynak_kurumlar.includes(data.id.toString()))
         } else {
           return false
         }
       } else if (arananKurum) {
-        return (data.ad.toLowerCase().includes(arananKurum.toLowerCase()))
+        return (data.adi.toLowerCase().includes(arananKurum.toLowerCase()))
       } else {
-        return secilenIstatistikiUrunlerinKaynakKurumkodlar.includes(data.kod.toString())
+        return secilenIstatistikiUrunlerinKaynakKurumkodlar.includes(data.id.toString())
       }
     })
   }, [

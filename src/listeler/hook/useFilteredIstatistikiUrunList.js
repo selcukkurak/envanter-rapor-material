@@ -15,10 +15,10 @@ export default function useFilteredIstatistikiUrunList (istatistikiUrunList, ara
   const [selectedKaynakKurum] = useSelectedKaynakKurum()
 
   return useMemo(() => {
-    const secilenUretimSikliklarKodlar = secilenUretimSikliklar.map(data => data.kod)
-    const secilenCografiDuzeylerKodlar = secilenCografiDuzeyler.map(data => data.kod)
+    const secilenUretimSikliklarKodlar = secilenUretimSikliklar.map(data => data.id)
+    const secilenCografiDuzeylerKodlar = secilenCografiDuzeyler.map(data => data.id)
     const secilenBirimListKodlar = secilenBirimList.map(data => data.ustBirimId)
-    const secilenVeriTuruKodlar = secilenVeriTurleri.map(data => data.kod)
+    const secilenVeriTuruKodlar = secilenVeriTurleri.map(data => data.id)
     
     //console.log("aranan ürün:",arananUrun)
     //console.log("secBirim:",secilenBirimListKodlar)

@@ -17,7 +17,7 @@ export default function useKaynakKurumlar (filteredIstatistikiUrunList) {
   )
 
   useEffect(()=>{
-    Axios.get("/envanter/rapor/idari_kayit_kaynak_kurumlar")
+    Axios.get("/api/referanslar?tipi=KAYNAK_KURUM")
       .then(response=>{
           setKaynakKurumlarList(response.data)
         }
@@ -43,6 +43,7 @@ export default function useKaynakKurumlar (filteredIstatistikiUrunList) {
     selectedKaynakKurum,
     onKurumAramaChange,
     handleClickRemoveKaynakKurumiItem,
-    handleClickKaynakKurumItem
+    handleClickKaynakKurumItem,
+    kaynakKurumlarList
   ]
 }

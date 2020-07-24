@@ -27,7 +27,7 @@ function UretimSikligiListesi () {
       multiple
       size="small"
       options={uretimSiklikList}
-      getOptionLabel={(option) => option.ad}
+      getOptionLabel={(option) => option.adi}
       onChange={handleChange}
       renderInput={(params) => (
         <TextField

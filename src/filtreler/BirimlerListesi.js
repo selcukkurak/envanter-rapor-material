@@ -1,16 +1,27 @@
 import { Checkbox, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useMemo, useState } from 'react'
 import Axios from 'axios'
 import useStyles from '../stiller/useStyles'
-import { useSecilenBirimList } from '../store'
+import { useGlobalState, useSecilenBirimList } from '../store'
 import Typography from '@material-ui/core/Typography'
+import { turkishTitleCase } from '@tuik/util'
+import uniq from 'lodash/uniq'
+import keyBy from 'lodash/keyBy'
+import { localSort } from '../util/sort'
 
 function birimAdiKisalt (birim) {
   return {
     ...birim,
-    ust_birim_adi: birim.ust_birim_adi
+    adi: birim.adi
       .replace(' Daire Başkanlığı', '')
       .replace(' Dai.bşk.lığı', '')
+  }
+}
+
+function birimAdiKucult (birim) {
+  return {
+    ...birim,
+    adi: turkishTitleCase(birim.adi)
   }
 }
 
@@ -18,16 +29,29 @@ function BirimlerListesi () {
   console.debug('BirimlerListesi Rendered!')
   const classes = useStyles()
 
-  const [birimlerList,setBirimlerList] = useState([])
+  const [birimler,setBirimler] = useGlobalState('birimler')
   const [secilenBirimList, setSecilenBirimList] = useSecilenBirimList()
+  const [urunler] = useGlobalState('urunler')
 
   useEffect(() => {
-    Axios.post("/envanter/rapor/ik_ust_birimler")
+    Axios.get("/api/birimler")
       .then(response => {
-          setBirimlerList(response.data.map(birimAdiKisalt))
+          setBirimler(keyBy(response.data.map(birimAdiKucult), 'id'))
         }
       )
   }, [])
+
+  const daireler = useMemo(() => {
+    const urunBirimIdleri = uniq(urunler.map(urun => urun.birimId)) // listelenen ürünlerin tekil birim idlerini bul
+    const daireIdleri = uniq(urunBirimIdleri.map(id => birimler[id].ustBirimId)) // birim idlerinden daire idlerini bul
+
+    return  localSort(
+      daireIdleri
+        .map(id => birimler[id])
+        .map(birimAdiKisalt),
+      'adi'
+    )// idlerden daireleri bul, adlarını kısalt, sırala
+  }, [urunler, birimler])
 
   const handleToggle = (value) => () => {
     const currentIndex = secilenBirimList.indexOf(value);
@@ -44,20 +68,20 @@ function BirimlerListesi () {
     <div>
       <Typography className={classes.birimlerBaslik}>Birimler</Typography>
       <List dense>
-        {birimlerList.map((value) => {
-          const labelId = `checkbox-list-label-${value.ustBirimId}`;
+        {daireler.map((birim) => {
+          const labelId = `checkbox-list-label-${birim.id}`;
 
           return (
             <ListItem
-              key={value.ustBirimId}
+              key={birim.id}
               button
               className={classes.filterlistitem}
-              onClick={handleToggle(value)}>
+              onClick={handleToggle(birim)}>
               <ListItemIcon
                 style={{minWidth:0, padding:2}}>
                 <Checkbox
                   edge="start"
-                  checked={secilenBirimList.indexOf(value) !== -1}
+                  checked={secilenBirimList.indexOf(birim) !== -1}
                   tabIndex={-1}
                   disableRipple
                   style={{color: 'white'}}
@@ -66,7 +90,7 @@ function BirimlerListesi () {
               </ListItemIcon>
               <ListItemText
                 id={labelId}
-                primary={value.ust_birim_adi}/>
+                primary={birim.adi}/>
             </ListItem>
           )
         })}

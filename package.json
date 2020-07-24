@@ -2,7 +2,7 @@
   "name": "envanter-rapor",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://envanter-api.kube.tuik.gov.tr",
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@material-ui/core": "^4.9.10",
     "@material-ui/icons": "^4.9.1",
@@ -11,7 +11,9 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@tuik/renkler": "^0.1.3",
+    "@tuik/util": "^0.3.2",
     "axios": "^0.19.2",
+    "lodash": "^4.17.19",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

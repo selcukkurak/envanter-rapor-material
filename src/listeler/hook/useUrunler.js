@@ -1,24 +1,23 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useSelectedHaberBulteni, useSelectedUrunKod } from '../../store'
+import { useGlobalState, useSelectedHaberBulteni, useSelectedUrunKod } from '../../store'
 import Axios from 'axios'
 import useFilteredIstatistikiUrunList from './useFilteredIstatistikiUrunList'
 
 export default function useUrunler () {
-  const [istatistikiUrunList, setIstatistikiUrunList] = useState([])
+  const [urunler, setUrunler] = useGlobalState('urunler')
   const [arananUrun, setArananUrun] = useState(null)
   const [selectedUrunKod, setSelectedUrunKod] = useSelectedUrunKod()
   const [, setSelectedHaberBulteni] = useSelectedHaberBulteni()
-  //const [, setSelectedKaynakKurum] = useSelectedKaynakKurum()
 
   const filteredIstatistikiUrunList = useFilteredIstatistikiUrunList(
-    istatistikiUrunList,
+    urunler,
     arananUrun
   )
 
   useEffect(() => {
-    Axios.get("/envanter/rapor/istatistiki_urunler")
+    Axios.get("/api/urunler")
       .then(response=>{
-          setIstatistikiUrunList(response.data)
+          setUrunler(response.data)
         }
       )
   }, [])
@@ -34,7 +33,6 @@ export default function useUrunler () {
   const handleClickIstatistikiUrunItem = useCallback((event,index) => {
     setSelectedUrunKod(index);
     setSelectedHaberBulteni(null)
-    //setSelectedKaynakKurum(null)
   }, [setSelectedUrunKod, setSelectedHaberBulteni])
 
   return [

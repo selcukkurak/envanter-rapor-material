@@ -10,11 +10,11 @@ export default function useFilteredHaberBulteniList (filteredIstatistikiUrunList
 
     return haberBulteniList.filter(data => {
       if (seciliUrun) {
-        return (seciliUrun.bulten_kod === data.kod)
+        return (seciliUrun.bulten_kod === data.id)
       } else if (arananHaberBulteni) {
-        return (data.ad.toLowerCase().includes(arananHaberBulteni.toLowerCase()))
+        return (data.adi.toLowerCase().includes(arananHaberBulteni.toLowerCase()))
       } else {
-        return secilenIstatistikiUrunKodlar.includes(data.kod)
+        return secilenIstatistikiUrunKodlar.includes(data.id)
       }
     })
   }, [

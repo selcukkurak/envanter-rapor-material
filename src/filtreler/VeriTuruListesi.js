@@ -21,7 +21,7 @@ function VeriTuruListesi () {
       multiple
       size='small'
       options={veriTuruList}
-      getOptionLabel={(option) => option.ad}
+      getOptionLabel={(option) => option.adi}
       onChange={handleChange}
       renderInput={(params) => (
         <TextField
