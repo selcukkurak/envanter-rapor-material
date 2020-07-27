@@ -1,13 +1,37 @@
 import React, { memo } from 'react'
-import { Card, CardContent, Divider, Grid, Typography } from '@material-ui/core'
-import useStyles from '../stiller/useStyles'
+import { Card, CardContent, Grid, Typography } from '@material-ui/core'
 import { useGlobalState } from '../store'
+import styled from 'styled-components'
+import { AnaRenkler, BaslikRenkleri } from '@tuik/renkler'
+
+const Wrapper = styled.div`
+  margin-bottom: 24px;
+`
+
+const CardHeader = styled.div`
+  padding: 16px 16px 4px;
+  border-bottom: 1px solid ${AnaRenkler.acikGri};
+`
+
+const Header = styled.div`
+  color: ${BaslikRenkleri.gri};
+  font-weight: bold;
+`
+
+const Label = props => (
+  <Typography variant='body2' color='primary' component='p'>
+    {props.children}
+  </Typography>
+)
+
+const Row = styled.div`
+  margin-bottom: 12px;
+`
+
+const uretimDurumu = durum => durum ? 'Üretiliyor' : 'Üretilmiyor'
 
 function UrunDetay () {
-  const classes = useStyles()
-
   const [urunler] = useGlobalState('urunler')
-  const [bultenler] = useGlobalState('bultenler')
   const [birimler] = useGlobalState('birimler')
   const [seciliUrunId] = useGlobalState('seciliUrunId')
 
@@ -15,85 +39,75 @@ function UrunDetay () {
 
   if (!urun) return null
 
-  const bulten = urun.bultenler &&
-    urun.bultenler.length !== 0 &&
-    bultenler.find(b => b.id === urun.bultenler[0].bultenId)
-
   const birim = birimler[urun.birimId]
   const daire = birimler[birim.ustBirimId]
 
   return (
-    <div className={classes.marginBottom}>
-      <Card className={classes.cardIstatistikiUrunDetay}>
-        <CardContent>
+    <Wrapper>
+      <Card>
+        <CardHeader>
           <Typography gutterBottom variant="h5">
-            <div className={classes.cardIstatistikiUrunDetay}>
-              {urun.adi}
-            </div>
+            <Header>{urun.adi}</Header>
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            <Grid container>
-              <Grid item sm={12} container>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
-                  Haber Bülteni
+        </CardHeader>
+        <CardContent>
+          <div>
+            <Row>
+              <Grid container>
+                <Grid item sm={3}>
+                  <Label>Daire Başkanlığı</Label>
                 </Grid>
-                <Grid item sm={9} className={classes.istatistikiUrunDetayValue}>
-                  <a href={bulten.sonYayin.url} target='_blank' title={bulten.sonYayin.donemi}>{bulten.adi}</a>
-                </Grid>
-              </Grid>
-              <Divider />
-              <Grid item sm={12} container>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
-                  Daire Başkanlığı
-                </Grid>
-                <Grid item sm={9} className={classes.istatistikiUrunDetayValue}>
+                <Grid item sm={9}>
                   {daire.adi}
                 </Grid>
               </Grid>
-              <Divider />
-              <Grid item sm={12} container>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
-                  Üretici Birim
+            </Row>
+            <Row>
+              <Grid container>
+                <Grid item sm={3}>
+                  <Label>Üretici Birim</Label>
                 </Grid>
-                <Grid item sm={9} className={classes.istatistikiUrunDetayValue}>
+                <Grid item sm={9}>
                   {birim.adi}
                 </Grid>
               </Grid>
-              <Divider />
-              <Grid item sm={12} container>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
-                  Üretim Sıklığı
+            </Row>
+            <Row>
+              <Grid container>
+                <Grid item sm={3}>
+                  <Label>Üretim Sıklığı</Label>
                 </Grid>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayValue}>
+                <Grid item sm={3}>
                   {urun.periyot ? urun.periyot.adi : '-'}
                 </Grid>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
-                  Coğrafi Düzey
+                <Grid item sm={3}>
+                  <Label>Coğrafi Düzey</Label>
                 </Grid>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayValue}>
+                <Grid item sm={3}>
                   {urun.cografiDuzey ? urun.cografiDuzey.adi : '-'}
                 </Grid>
               </Grid>
-              <Divider />
-              <Grid item sm={12} container>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
-                  Üretim Durumu
+            </Row>
+            <Row>
+              <Grid container>
+                <Grid item sm={3}>
+                  <Label>Üretim Durumu</Label>
                 </Grid>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayValue}>
-                  {urun.uretiliyor ? 'Üretiliyor' : 'Üretilmiyor'}
+                <Grid item sm={3}>
+                  {uretimDurumu(urun.uretiliyor)}
                 </Grid>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayLabel}>
-                  Veri Türü
+                <Grid item sm={3}>
+                  <Label>Veri Türü</Label>
                 </Grid>
-                <Grid item sm={3} className={classes.istatistikiUrunDetayValue}>
+                <Grid item sm={3}>
                   {urun.veri_turu}
                 </Grid>
               </Grid>
-            </Grid>
-          </Typography>
+            </Row>
+          </div>
         </CardContent>
       </Card>
-    </div>
+    </Wrapper>
   )
 }
 

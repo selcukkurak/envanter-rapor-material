@@ -12,15 +12,13 @@ export default function AnketlerList(props) {
 
     return(
       <div>
-        <List dense style={{backgroundColor:'white'}}>
+        <List dense>
             {props.anketler.map((value) => {
               return (
               <ListItem
                 key={value.id}
                 button
-                selected={selectedItem===value.id}
                 onClick={(event) => handleClickItem(event, value.id)}>
-
                 <AnketDetayDialog anketValue={value} />
               </ListItem>
               );

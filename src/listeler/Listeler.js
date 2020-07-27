@@ -3,15 +3,27 @@ import ListeItem from './ListeItem'
 import React, { Fragment, memo } from 'react'
 import { AnketIkon, IdariKayitIkon } from './ikonlar'
 import { Grid } from '@material-ui/core'
-import useStyles from '../stiller/useStyles'
 import useUrunler from './hook/useUrunler'
 import useBultenler from './hook/useBultenler'
 import useKaynakKurumlar from './hook/useKaynakKurumlar'
+import styled from 'styled-components'
+import { AnaRenkler } from '@tuik/renkler'
+import useSiraliBultenler from './hook/useSiraliBultenler'
+
+const Gosterge = styled.div`
+  display: inline-block;
+  color: ${AnaRenkler.koyuKirmizi};
+  margin-right: 12px;
+`
+
+const GostergeHeader = props => (
+  <Fragment>
+    <Gosterge>{props.gosterge}</Gosterge>
+    {props.baslik}
+  </Fragment>
+)
 
 function Listeler () {
-  console.debug('Listeler Rendered!')
-  const classes = useStyles()
-
   const [
     filteredIstatistikiUrunList,
     selectedUrunKod,
@@ -25,9 +37,10 @@ function Listeler () {
     selectedHaberBultenKod,
     onHaberBulteniAramaChange,
     handleClickRemoveHaberBulteniItem,
-    handleClickBultenItem,
-    siraliBultenler
+    handleClickBultenItem
   ] = useBultenler(filteredIstatistikiUrunList)
+
+  const [siraliBultenler] = useSiraliBultenler()
 
   const [
     filteredKaynakKurumlarList,
@@ -44,7 +57,7 @@ function Listeler () {
         <Grid container spacing={2}>
           <Grid item xs>
             <Liste
-              title={<Fragment><span className={classes.gosterge}>{filteredIstatistikiUrunList.length}</span>  İstatistiki Ürün</Fragment>}
+              title={<GostergeHeader gosterge={filteredIstatistikiUrunList.length} baslik='İstatistiki Ürün' />}
               selectedItem={selectedUrunKod}
               handleClickRemoveItem={handleClickRemoveItem}
               onAramaChange={onUrunAramaChange}
@@ -59,8 +72,8 @@ function Listeler () {
                     text={urun.adi}
                     rightItems={(
                       <Fragment>
-                        {urun.anket_durumu && <AnketIkon />}
-                        {urun.idari_kayit_durumu && <IdariKayitIkon />}
+                        {urun.sayilar.anket !== 0 && <AnketIkon />}
+                        {urun.sayilar.idariKayit !== 0 && <IdariKayitIkon />}
                       </Fragment>
                     )} />
                 )
@@ -68,7 +81,7 @@ function Listeler () {
           </Grid>
           <Grid item xs>
             <Liste
-              title={<Fragment><span className={classes.gosterge}>{siraliBultenler.length}</span>  Haber Bülteni</Fragment>}
+              title={<GostergeHeader gosterge={siraliBultenler.length} baslik='Haber Bülteni' />}
               selectedItem={selectedHaberBultenKod}
               handleClickRemoveItem={handleClickRemoveHaberBulteniItem}
               onAramaChange={onHaberBulteniAramaChange}
@@ -88,7 +101,7 @@ function Listeler () {
       </Grid>
       <Grid item xs>
         <Liste
-          title={<Fragment><span className={classes.gosterge}>{kaynakKurumlarList.length}</span>  Kaynak Kurum</Fragment>}
+          title={<GostergeHeader gosterge={kaynakKurumlarList.length} baslik='Kaynak Kurum' />}
           selectedItem={selectedKaynakKurum}
           handleClickRemoveItem={handleClickRemoveKaynakKurumiItem}
           onAramaChange={onKurumAramaChange}

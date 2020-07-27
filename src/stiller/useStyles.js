@@ -33,7 +33,6 @@ export default makeStyles((theme) => ({
   },
 
   cardIstatistikiUrunDetay: {
-    width: '100%',
     color: '#5A6F7B',
   },
 

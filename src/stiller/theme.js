@@ -7,7 +7,7 @@ const theme = createMuiTheme({
       light: AnaRenkler.kirmizi,
       main: AnaRenkler.koyuKirmizi,
       dark: AnaRenkler.cokKoyuKirmizi,
-    },
+    }
   }
 })
 
