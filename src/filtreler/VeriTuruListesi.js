@@ -4,12 +4,12 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import { useSecilenVeriTurleri } from '../store'
 
 function VeriTuruListesi () {
-  console.debug('VeriTuruListesi Rendered!')
-
   const [, setSecilenVeriTurleri] = useSecilenVeriTurleri()
+
   const veriTuruList = [
-    { kod:'1', ad:'Sayım - Örnekleme' },
-    { kod:'2', ad:'İdari kayıt' }
+    { id: '1', adi:'Sayım - Örnekleme' },
+    { id: '2', adi:'İdari kayıt' },
+    { id: '3', adi: 'Hepsi' }
   ]
 
   const handleChange = (event, values) => {

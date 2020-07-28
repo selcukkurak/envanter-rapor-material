@@ -1,32 +1,23 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { TextField } from '@material-ui/core'
-import Axios from 'axios'
-import { useSecilenUretimSikliklari } from '../store'
+import { useGlobalState, useSecilenUretimSikliklari } from '../store'
 
 function UretimSikligiListesi () {
-  console.debug('UretimSikligiListesi Rendered!')
-
-  const [uretimSiklikList, setUretimSiklikList] = useState([])
+  const [referanslar] = useGlobalState('referanslar')
   const [, setSecilenUretimSikliklar] = useSecilenUretimSikliklari()
-
-  useEffect(() => {
-    Axios.get("/envanter/rapor/uretim_sikligi")
-      .then(response => {
-          setUretimSiklikList(response.data)
-        }
-      )
-  }, [])
 
   const handleChange = (event, values) => {
     setSecilenUretimSikliklar(values)
   }
 
+  const periyotlar = referanslar.PERIYOT || []
+
   return (
     <Autocomplete
       multiple
       size="small"
-      options={uretimSiklikList}
+      options={periyotlar}
       getOptionLabel={(option) => option.adi}
       onChange={handleChange}
       renderInput={(params) => (

@@ -1,32 +1,23 @@
 import { TextField } from '@material-ui/core'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import React, { memo, useEffect, useState } from 'react'
-import Axios from 'axios'
-import { useSecilenCografiDuzeyler } from '../store'
+import React, { memo } from 'react'
+import { useGlobalState, useSecilenCografiDuzeyler } from '../store'
 
 function CografiDuzeyListesi () {
-  console.debug('CografiDuzeyListesi Rendered!')
-
-  const [cografiDuzeyList, setCografiDuzeyList]=useState([])
+  const [referanslar] = useGlobalState('referanslar')
   const [, setSecilenCografiDuzeyler] = useSecilenCografiDuzeyler()
-
-  useEffect(() => {
-    Axios.get("/envanter/rapor/cografi_duzey")
-      .then(response => {
-          setCografiDuzeyList(response.data)
-        }
-      )
-  }, [])
 
   const handleChange = (event, values) => {
     setSecilenCografiDuzeyler(values)
   }
 
+  const cografiDuzeyler = referanslar.COGRAFI_DUZEY || []
+
   return (
     <Autocomplete
       multiple
       size="small"
-      options={cografiDuzeyList}
+      options={cografiDuzeyler}
       getOptionLabel={(option) => option.adi}
       onChange={handleChange}
       renderInput={(params) => (
