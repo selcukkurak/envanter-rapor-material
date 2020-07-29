@@ -1,8 +1,9 @@
 import React, { memo } from 'react'
 import { Card, CardContent, Grid, Typography } from '@material-ui/core'
-import { useGlobalState } from '../store'
 import styled from 'styled-components'
 import { AnaRenkler, BaslikRenkleri } from '@tuik/renkler'
+import { useRecoilValue } from 'recoil/dist'
+import { birimlerById, seciliUrun } from '../store/selectors'
 
 const Wrapper = styled.div`
   margin-bottom: 24px;
@@ -31,11 +32,8 @@ const Row = styled.div`
 const uretimDurumu = durum => durum ? 'Üretiliyor' : 'Üretilmiyor'
 
 function UrunDetay () {
-  const [urunler] = useGlobalState('urunler')
-  const [birimler] = useGlobalState('birimler')
-  const [seciliUrunId] = useGlobalState('seciliUrunId')
-
-  const urun = urunler.find(urun => urun.id === seciliUrunId)
+  const birimler = useRecoilValue(birimlerById)
+  const urun = useRecoilValue(seciliUrun)
 
   if (!urun) return null
 
@@ -95,12 +93,6 @@ function UrunDetay () {
                 </Grid>
                 <Grid item sm={3}>
                   {uretimDurumu(urun.uretiliyor)}
-                </Grid>
-                <Grid item sm={3}>
-                  <Label>Veri Türü</Label>
-                </Grid>
-                <Grid item sm={3}>
-                  {urun.veri_turu}
                 </Grid>
               </Grid>
             </Row>

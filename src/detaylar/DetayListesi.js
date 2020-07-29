@@ -2,7 +2,6 @@ import { Card, CardContent, Typography } from '@material-ui/core'
 import IdariKayitlarList from './IdariKayitlarList'
 import AnketlerList from './AnketlerList'
 import React, { useEffect, useState } from 'react'
-import { useGlobalState } from '../store'
 import Axios from 'axios'
 import styled from 'styled-components'
 import Link from '@material-ui/core/Link'
@@ -12,7 +11,8 @@ import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import TableBody from '@material-ui/core/TableBody'
 import { BaslikRenkleri } from '@tuik/renkler'
-import useSiraliBultenler from '../listeler/hook/useSiraliBultenler'
+import { useRecoilValue } from 'recoil/dist'
+import { seciliUrun, tekilBultenler } from '../store/selectors'
 
 const Bolum = styled.div`
   margin-bottom: 12px;
@@ -33,33 +33,30 @@ const SubHeader = styled.div`
 `
 
 function DetayListesi () {
-  const [idariKayitlar,setIdariKayitlar]=useState([])
-  const [anketler,setAnketler]=useState([])
+  const [idariKayitlar, setIdariKayitlar] = useState([])
+  const [anketler, setAnketler]=useState([])
   const [paylasimlar, setPaylasimlar] = useState([])
 
-  const [urunler] = useGlobalState('urunler')
-  const [seciliUrunId] = useGlobalState('seciliUrunId')
-  const [siraliBultenler] = useSiraliBultenler()
+  const urun = useRecoilValue(seciliUrun)
+  const bultenler = useRecoilValue(tekilBultenler)
 
   useEffect(() => {
-    if(seciliUrunId) {
-      Axios.get(`/api/urunler/${seciliUrunId}/idari-kayitlar`)
+    if(urun) {
+      Axios.get(`/api/urunler/${urun.id}/idari-kayitlar`)
         .then(response => setIdariKayitlar(response.data))
 
-      Axios.get(`/api/urunler/${seciliUrunId}/anketler`)
+      Axios.get(`/api/urunler/${urun.id}/anketler`)
         .then(response => setAnketler(response.data))
 
-      Axios.get(`/api/urunler/${seciliUrunId}/paylasimlar`)
+      Axios.get(`/api/urunler/${urun.id}/paylasimlar`)
         .then(response => setPaylasimlar(response.data))
     }
-  },[seciliUrunId])
-
-  const urun = urunler.find(urun => urun.id === seciliUrunId)
+  },[urun])
 
   if (!urun) return null
 
   const urunBultenleri = urun.bultenler
-    .map(b => siraliBultenler.find(bulten => bulten.id === b.bultenId))
+    .map(b => bultenler.find(bulten => bulten.id === b.bultenId))
     .filter(bulten => !!bulten)
 
   return (

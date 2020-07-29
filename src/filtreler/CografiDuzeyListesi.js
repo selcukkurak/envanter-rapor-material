@@ -1,11 +1,12 @@
 import { TextField } from '@material-ui/core'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import React, { memo } from 'react'
-import { useGlobalState, useSecilenCografiDuzeyler } from '../store'
+import { referanslarState, seciliCografiDuzeylerState } from '../store'
+import { useRecoilValue, useSetRecoilState } from 'recoil/dist'
 
 function CografiDuzeyListesi () {
-  const [referanslar] = useGlobalState('referanslar')
-  const [, setSecilenCografiDuzeyler] = useSecilenCografiDuzeyler()
+  const referanslar = useRecoilValue(referanslarState)
+  const setSecilenCografiDuzeyler = useSetRecoilState(seciliCografiDuzeylerState)
 
   const handleChange = (event, values) => {
     setSecilenCografiDuzeyler(values)

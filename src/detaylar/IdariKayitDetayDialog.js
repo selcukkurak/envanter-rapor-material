@@ -14,10 +14,14 @@ import Dialog from '@material-ui/core/Dialog'
 import { withStyles } from '@material-ui/core/styles'
 import React from 'react'
 import { DialogActions, DialogContent, DialogTitle } from './dialog'
+import { useRecoilValue } from 'recoil/dist'
+import { siraliKurumlar } from '../store/selectors'
 
 export default function IdariKayitDetayDialog(props) {
   const {idariKayitValue} = props
   const [open, setOpen] = React.useState(false);
+  const kurumlar = useRecoilValue(siraliKurumlar)
+  const kurum = kurumlar.find(k => k.id === idariKayitValue.kaynakKurumId)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -76,7 +80,7 @@ export default function IdariKayitDetayDialog(props) {
                 Kaynak Kurum:
              </Grid>
              <Grid item xs={9}  className={classes.istatistikiUrunDetayValue}>
-                {idariKayitValue.kaynakKurumAdi}
+                {kurum && kurum.adi}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -103,13 +107,13 @@ export default function IdariKayitDetayDialog(props) {
                 Veri Biçimi:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idariKayitValue.bicim ? idariKayitValue.bicim.adi : '-'}
+                {idariKayitValue.bicim && idariKayitValue.bicim.adi}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Düzey:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idariKayitValue.veriDuzeyi ? idariKayitValue.veriDuzeyi.adi : '-'}
+                {idariKayitValue.veriDuzeyi && idariKayitValue.veriDuzeyi.adi}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -118,13 +122,13 @@ export default function IdariKayitDetayDialog(props) {
                 Veri Talep Biçimi:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idariKayitValue.talepBicimi ? idariKayitValue.talepBicimi.adi : '-'}
+                {idariKayitValue.talepBicimi && idariKayitValue.talepBicimi.adi}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Transfer Sıklık:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idariKayitValue.transferPeriyot ? idariKayitValue.transferPeriyot.adi : '-'}
+                {idariKayitValue.transferPeriyot && idariKayitValue.transferPeriyot.adi}
              </Grid>
              <Grid item xs={12}  className={classes.istatistikiUrunDetayValue}>
                 <Divider></Divider>
@@ -133,7 +137,7 @@ export default function IdariKayitDetayDialog(props) {
                 Aktarım Türü:
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayValue}>
-                {idariKayitValue.aktarimTuru ? idariKayitValue.aktarimTuru.adi : '-'}
+                {idariKayitValue.aktarimTuru && idariKayitValue.aktarimTuru.adi}
              </Grid>
              <Grid item xs={3}  className={classes.istatistikiUrunDetayLabel}>
                 Transfer Sorumlu Birim:

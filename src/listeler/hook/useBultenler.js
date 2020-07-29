@@ -1,17 +1,17 @@
 import { useCallback, useState } from 'react'
-import { useGlobalState, useSelectedHaberBulteni, useSelectedKaynakKurum, useSelectedUrunKod } from '../../store'
-import useFilteredHaberBulteniList from './useFilteredHaberBulteniList'
+import { seciliBultenState, seciliKaynakKurumState, seciliUrunState } from '../../store'
+import useFiltreliBultenler from './useFiltreliBultenler'
+import { useRecoilState, useSetRecoilState } from 'recoil/dist'
 
-export default function useBultenler (filteredIstatistikiUrunList) {
-  const [bultenler] = useGlobalState('bultenler')
+export default function useBultenler (filtreliUrunler) {
   const [arananHaberBulteni, setArananHaberBulteni] = useState(null)
-  const [selectedHaberBultenKod, setSelectedHaberBultenKod] = useSelectedHaberBulteni()
-  const [, setSelectedUrunKod] = useSelectedUrunKod()
-  const [, setSelectedKaynakKurum] = useSelectedKaynakKurum()
 
-  const filteredHaberBulteniList = useFilteredHaberBulteniList(
-    filteredIstatistikiUrunList,
-    bultenler,
+  const [selectedHaberBultenKod, setSelectedHaberBultenKod] = useRecoilState(seciliBultenState)
+  const setSelectedUrunKod = useSetRecoilState(seciliUrunState)
+  const setSelectedKaynakKurum = useSetRecoilState(seciliKaynakKurumState)
+
+  const filtreliBultenler = useFiltreliBultenler(
+    filtreliUrunler,
     arananHaberBulteni
   )
 
@@ -30,7 +30,7 @@ export default function useBultenler (filteredIstatistikiUrunList) {
   }, [setSelectedUrunKod, setSelectedHaberBultenKod, setSelectedKaynakKurum])
 
   return [
-    filteredHaberBulteniList,
+    filtreliBultenler,
     selectedHaberBultenKod,
     onHaberBulteniAramaChange,
     handleClickRemoveHaberBulteniItem,

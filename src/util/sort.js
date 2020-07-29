@@ -5,5 +5,5 @@ function getProperty (nesne, key) {
 }
 
 export function localSort (dizi, key) {
-  return dizi.sort((a, b) => getProperty(a, key).localeCompare(getProperty(b, key)))
+  return [...dizi].sort((a, b) => getProperty(a, key).localeCompare(getProperty(b, key)))
 }

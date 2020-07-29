@@ -1,24 +1,15 @@
-import { createGlobalState } from 'react-hooks-global-state'
+import { atom } from 'recoil/dist'
 
-const initialState = {
-  urunler: [],
-  bultenler: [],
-  birimler: {},
-  referanslar: {},
-  seciliUrunId: null,
-  selectedHaberBulteni: null,
-  selectedKaynakKurum: null,
-  secilenUretimSikliklari: [],
-  secilenVeriTurleri: [],
-  secilenCografiDuzeyler: [],
-  seciliBirimler: []
-}
+export const urunlerState = atom({ key: 'urunlerState', default: [] })
+export const bultenlerState = atom({ key: 'bultenlerState', default: [] })
+export const birimlerState = atom({ key: 'birimlerState', default: [] })
+export const referanslarState = atom({ key: 'referanslarState', default: [] })
 
-export const { useGlobalState } = createGlobalState(initialState)
+export const seciliUrunState = atom({ key: 'seciliUrunState', default: null })
+export const seciliBultenState = atom({ key: 'seciliBultenState', default: null })
+export const seciliKaynakKurumState = atom({ key: 'seciliKaynakKurumState', default: null })
+export const seciliVeriTuruState = atom({ key: 'seciliVeriTuruState', default: null })
 
-export const useSelectedUrunKod = () => useGlobalState('seciliUrunId')
-export const useSelectedHaberBulteni = () => useGlobalState('selectedHaberBulteni')
-export const useSelectedKaynakKurum = () => useGlobalState('selectedKaynakKurum')
-export const useSecilenUretimSikliklari = () => useGlobalState('secilenUretimSikliklari')
-export const useSecilenVeriTurleri = () => useGlobalState('secilenVeriTurleri')
-export const useSecilenCografiDuzeyler = () => useGlobalState('secilenCografiDuzeyler')
+export const seciliUretimSikliklariState = atom({ key: 'seciliUretimSikliklariState', default: [] })
+export const seciliCografiDuzeylerState = atom({ key: 'seciliCografiDuzeylerState', default: [] })
+export const seciliBirimlerState = atom({ key: 'seciliBirimlerState', default: [] })

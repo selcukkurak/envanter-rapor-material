@@ -1,17 +1,14 @@
 import { useCallback, useState } from 'react'
-import { useGlobalState, useSelectedHaberBulteni, useSelectedUrunKod } from '../../store'
-import useFilteredIstatistikiUrunList from './useFilteredIstatistikiUrunList'
+import { seciliBultenState, seciliUrunState } from '../../store'
+import useFiltreliUrunler from './useFiltreliUrunler'
+import { useRecoilState, useSetRecoilState } from 'recoil/dist'
 
 export default function useUrunler () {
-  const [urunler] = useGlobalState('urunler')
   const [arananUrun, setArananUrun] = useState(null)
-  const [selectedUrunKod, setSelectedUrunKod] = useSelectedUrunKod()
-  const [, setSelectedHaberBulteni] = useSelectedHaberBulteni()
+  const [selectedUrunKod, setSelectedUrunKod] = useRecoilState(seciliUrunState)
+  const setSelectedHaberBulteni = useSetRecoilState(seciliBultenState)
 
-  const filteredIstatistikiUrunList = useFilteredIstatistikiUrunList(
-    urunler,
-    arananUrun
-  )
+  const filtreliUrunler = useFiltreliUrunler(arananUrun)
 
   const onUrunAramaChange = useCallback((event) => {
     setArananUrun(event.target.value)
@@ -21,13 +18,13 @@ export default function useUrunler () {
     setSelectedUrunKod(null)
   }, [setSelectedUrunKod])
 
-  const handleClickIstatistikiUrunItem = useCallback((event,index) => {
+  const handleClickIstatistikiUrunItem = useCallback((event, index) => {
     setSelectedUrunKod(index);
     setSelectedHaberBulteni(null)
   }, [setSelectedUrunKod, setSelectedHaberBulteni])
 
   return [
-    filteredIstatistikiUrunList,
+    filtreliUrunler,
     selectedUrunKod,
     onUrunAramaChange,
     handleClickRemoveItem,

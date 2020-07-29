@@ -1,11 +1,12 @@
 import React, { memo } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { TextField } from '@material-ui/core'
-import { useGlobalState, useSecilenUretimSikliklari } from '../store'
+import { referanslarState, seciliUretimSikliklariState } from '../store'
+import { useRecoilValue, useSetRecoilState } from 'recoil/dist'
 
 function UretimSikligiListesi () {
-  const [referanslar] = useGlobalState('referanslar')
-  const [, setSecilenUretimSikliklar] = useSecilenUretimSikliklari()
+  const referanslar = useRecoilValue(referanslarState)
+  const setSecilenUretimSikliklar = useSetRecoilState(seciliUretimSikliklariState)
 
   const handleChange = (event, values) => {
     setSecilenUretimSikliklar(values)

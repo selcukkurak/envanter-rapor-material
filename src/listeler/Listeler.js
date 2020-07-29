@@ -8,7 +8,6 @@ import useBultenler from './hook/useBultenler'
 import useKaynakKurumlar from './hook/useKaynakKurumlar'
 import styled from 'styled-components'
 import { AnaRenkler } from '@tuik/renkler'
-import useSiraliBultenler from './hook/useSiraliBultenler'
 
 const Gosterge = styled.div`
   display: inline-block;
@@ -25,7 +24,7 @@ const GostergeHeader = props => (
 
 function Listeler () {
   const [
-    filteredIstatistikiUrunList,
+    filtreliUrunler,
     selectedUrunKod,
     onUrunAramaChange,
     handleClickRemoveItem,
@@ -33,23 +32,20 @@ function Listeler () {
   ] = useUrunler()
 
   const [
-    filteredHaberBulteniList,
+    filtreliBultenler,
     selectedHaberBultenKod,
     onHaberBulteniAramaChange,
     handleClickRemoveHaberBulteniItem,
     handleClickBultenItem
-  ] = useBultenler(filteredIstatistikiUrunList)
-
-  const [siraliBultenler] = useSiraliBultenler()
+  ] = useBultenler(filtreliUrunler)
 
   const [
-    filteredKaynakKurumlarList,
+    filtreliKurumlar,
     selectedKaynakKurum,
     onKurumAramaChange,
     handleClickRemoveKaynakKurumiItem,
-    handleClickKaynakKurumItem,
-    kaynakKurumlarList
-  ] = useKaynakKurumlar(filteredIstatistikiUrunList)
+    handleClickKaynakKurumItem
+  ] = useKaynakKurumlar(filtreliUrunler)
 
   return (
     <Fragment>
@@ -57,13 +53,13 @@ function Listeler () {
         <Grid container spacing={2}>
           <Grid item xs>
             <Liste
-              title={<GostergeHeader gosterge={filteredIstatistikiUrunList.length} baslik='İstatistiki Ürün' />}
+              title={<GostergeHeader gosterge={filtreliUrunler.length} baslik='İstatistiki Ürün' />}
               selectedItem={selectedUrunKod}
               handleClickRemoveItem={handleClickRemoveItem}
               onAramaChange={onUrunAramaChange}
-              length={filteredIstatistikiUrunList.length}
+              length={filtreliUrunler.length}
               itemRenderer={(index, key) => {
-                const urun = filteredIstatistikiUrunList[index]
+                const urun = filtreliUrunler[index]
                 return (
                   <ListeItem
                     key={key}
@@ -81,13 +77,13 @@ function Listeler () {
           </Grid>
           <Grid item xs>
             <Liste
-              title={<GostergeHeader gosterge={siraliBultenler.length} baslik='Haber Bülteni' />}
+              title={<GostergeHeader gosterge={filtreliBultenler.length} baslik='Haber Bülteni' />}
               selectedItem={selectedHaberBultenKod}
               handleClickRemoveItem={handleClickRemoveHaberBulteniItem}
               onAramaChange={onHaberBulteniAramaChange}
-              length={siraliBultenler.length}
+              length={filtreliBultenler.length}
               itemRenderer={(index, key) => {
-                const bulten = siraliBultenler[index]
+                const bulten = filtreliBultenler[index]
                 return (
                   <ListeItem
                     key={key}
@@ -101,13 +97,13 @@ function Listeler () {
       </Grid>
       <Grid item xs>
         <Liste
-          title={<GostergeHeader gosterge={kaynakKurumlarList.length} baslik='Kaynak Kurum' />}
+          title={<GostergeHeader gosterge={filtreliKurumlar.length} baslik='Kaynak Kurum' />}
           selectedItem={selectedKaynakKurum}
           handleClickRemoveItem={handleClickRemoveKaynakKurumiItem}
           onAramaChange={onKurumAramaChange}
-          length={kaynakKurumlarList.length}
+          length={filtreliKurumlar.length}
           itemRenderer={(index, key) => {
-            const kurum = kaynakKurumlarList[index]
+            const kurum = filtreliKurumlar[index]
             return (
               <ListeItem
                 key={key}

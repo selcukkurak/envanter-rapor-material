@@ -5,7 +5,7 @@ import AnketDetayDialog from './AnketDetayDialog.js';
 
 
 export default function AnketlerList(props) {
-    const [selectedItem, setSelectedItem] = useState(null)
+    const [, setSelectedItem] = useState(null)
     const handleClickItem = (event,index) => {
         setSelectedItem(index);
     }

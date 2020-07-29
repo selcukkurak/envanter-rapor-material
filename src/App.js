@@ -15,6 +15,7 @@ import ReferansLoader from './loader/ReferansLoader'
 import UrunLoader from './loader/UrunLoader'
 import BultenLoader from './loader/BultenLoader'
 import BirimLoader from './loader/BirimLoader'
+import { RecoilRoot } from 'recoil/dist'
 
 const Wrapper = styled.div`
     padding: 62px 16px 0 16px;
@@ -36,32 +37,34 @@ const OrtaBolme = styled.div`
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <UrunLoader />
-      <BultenLoader />
-      <ReferansLoader />
-      <BirimLoader />
-      <Wrapper>
-        <HeaderBar />
-        <ListeReset />
-        <YanMenu>
-          <Filtreler />
-        </YanMenu>
-        <OrtaBolme>
-          <Grid container spacing={2}>
-            <Grid item xs={7}>
-              <Grid container direction="column" spacing={2}>
-                <Listeler />
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <UrunLoader />
+        <BultenLoader />
+        <ReferansLoader />
+        <BirimLoader />
+        <Wrapper>
+          <HeaderBar />
+          <ListeReset />
+          <YanMenu>
+            <Filtreler />
+          </YanMenu>
+          <OrtaBolme>
+            <Grid container spacing={2}>
+              <Grid item xs={7}>
+                <Grid container direction="column" spacing={2}>
+                  <Listeler />
+                </Grid>
+              </Grid>
+              <Grid item xs={5}>
+                <UrunDetay />
+                <DetayListesi />
               </Grid>
             </Grid>
-            <Grid item xs={5}>
-              <UrunDetay />
-              <DetayListesi />
-            </Grid>
-          </Grid>
-        </OrtaBolme>
-      </Wrapper>
-    </ThemeProvider>
+          </OrtaBolme>
+        </Wrapper>
+      </ThemeProvider>
+    </RecoilRoot>
   );
 }
 

@@ -1,33 +1,44 @@
 import React, { memo } from 'react'
-import useStyles from '../stiller/useStyles'
 import UretimSikligiListesi from './UretimSikligiListesi'
 import VeriTuruListesi from './VeriTuruListesi'
 import CografiDuzeyListesi from './CografiDuzeyListesi'
 import BirimlerListesi from './BirimlerListesi'
 import Typography from '@material-ui/core/Typography'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  padding: 60px 12px 12px;
+`
+
+const Baslik = styled(Typography)`
+  color: #ffffff;
+  padding: 12px 4px;
+  font-size: 1.2em;
+`
+
+const Row = styled.div`
+  margin-bottom: 24px;
+`
 
 function Filtreler () {
-  const classes = useStyles()
-  console.debug('Filtreler Rendered!')
-
   return (
-    <div className={classes.filtrelerTema}>
-      <Typography className={classes.filtrelerBaslik}>
+    <Wrapper>
+      <Baslik>
         FİLTRELER
-      </Typography>
-      <div className={classes.marginBottom}>
+      </Baslik>
+      <Row>
         <UretimSikligiListesi />
-      </div>
-      <div className={classes.marginBottom}>
+      </Row>
+      <Row>
         <VeriTuruListesi />
-      </div>
-      <div className={classes.marginBottom}>
+      </Row>
+      <Row>
         <CografiDuzeyListesi />
-      </div>
+      </Row>
       <div>
         <BirimlerListesi />
       </div>
-    </div>
+    </Wrapper>
   )
 }
 

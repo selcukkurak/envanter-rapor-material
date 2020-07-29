@@ -1,23 +1,24 @@
 import {
-  useGlobalState,
-  useSecilenCografiDuzeyler,
-  useSecilenUretimSikliklari,
-  useSecilenVeriTurleri,
-  useSelectedHaberBulteni,
-  useSelectedKaynakKurum,
-  useSelectedUrunKod
+  seciliBirimlerState,
+  seciliBultenState,
+  seciliCografiDuzeylerState,
+  seciliKaynakKurumState,
+  seciliUretimSikliklariState,
+  seciliUrunState,
+  seciliVeriTuruState
 } from '../store'
 import { useEffect } from 'react'
+import { useRecoilValue, useSetRecoilState } from 'recoil/dist'
 
 function ListeReset () {
-  const [secilenUretimSikliklar] = useSecilenUretimSikliklari()
-  const [secilenVeriTurleri] = useSecilenVeriTurleri()
-  const [secilenCografiDuzeyler] = useSecilenCografiDuzeyler()
-  const [secilenBirimList] = useGlobalState('seciliBirimler')
+  const secilenUretimSikliklar = useRecoilValue(seciliUretimSikliklariState)
+  const secilenVeriTuru = useRecoilValue(seciliVeriTuruState)
+  const secilenCografiDuzeyler = useRecoilValue(seciliCografiDuzeylerState)
+  const secilenBirimList = useRecoilValue(seciliBirimlerState)
 
-  const [, setSelectedUrunKod] = useSelectedUrunKod()
-  const [, setSelectedHaberBultenKod] = useSelectedHaberBulteni()
-  const [, setSelectedKaynakKurum] = useSelectedKaynakKurum()
+  const setSelectedUrunKod = useSetRecoilState(seciliUrunState)
+  const setSelectedHaberBultenKod = useSetRecoilState(seciliBultenState)
+  const setSelectedKaynakKurum = useSetRecoilState(seciliKaynakKurumState)
 
   useEffect(() => {
     console.debug('Listeleri Sıfırla')
@@ -26,7 +27,7 @@ function ListeReset () {
     setSelectedKaynakKurum(null)
   }, [
     secilenUretimSikliklar,
-    secilenVeriTurleri,
+    secilenVeriTuru,
     secilenCografiDuzeyler,
     secilenBirimList,
     setSelectedUrunKod,

@@ -1,28 +1,19 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useSelectedHaberBulteni, useSelectedKaynakKurum, useSelectedUrunKod } from '../../store'
-import Axios from 'axios'
-import useFilteredKaynakKurumlarList from './useFilteredKaynakKurumlarList'
+import { useCallback, useState } from 'react'
+import { seciliBultenState, seciliKaynakKurumState, seciliUrunState } from '../../store'
+import useFiltreliKurumlar from './useFiltreliKurumlar'
+import { useRecoilState, useSetRecoilState } from 'recoil/dist'
 
-export default function useKaynakKurumlar (filteredIstatistikiUrunList) {
-  const [kaynakKurumlarList, setKaynakKurumlarList] = useState([])
+export default function useKaynakKurumlar (filtreliUrunler) {
   const [arananKurum, setArananKurum] = useState(null)
-  const [selectedKaynakKurum, setSelectedKaynakKurum] = useSelectedKaynakKurum()
-  const [, setSelectedHaberBulteni] = useSelectedHaberBulteni()
-  const [, setSelectedUrunKod] = useSelectedUrunKod()
 
-  const filteredKaynakKurumlarList = useFilteredKaynakKurumlarList(
-    filteredIstatistikiUrunList,
-    kaynakKurumlarList,
+  const [selectedKaynakKurum, setSelectedKaynakKurum] = useRecoilState(seciliKaynakKurumState)
+  const setSelectedHaberBulteni = useSetRecoilState(seciliBultenState)
+  const setSelectedUrunKod = useSetRecoilState(seciliUrunState)
+
+  const filtreliKurumlar = useFiltreliKurumlar(
+    filtreliUrunler,
     arananKurum
   )
-
-  useEffect(()=>{
-    Axios.get("/api/referanslar?tipi=KAYNAK_KURUM")
-      .then(response=>{
-          setKaynakKurumlarList(response.data)
-        }
-      )
-  },[])
 
   const onKurumAramaChange = useCallback((event) => {
     setArananKurum(event.target.value)
@@ -39,11 +30,10 @@ export default function useKaynakKurumlar (filteredIstatistikiUrunList) {
   }, [setSelectedUrunKod, setSelectedHaberBulteni, setSelectedKaynakKurum])
 
   return [
-    filteredKaynakKurumlarList,
+    filtreliKurumlar,
     selectedKaynakKurum,
     onKurumAramaChange,
     handleClickRemoveKaynakKurumiItem,
-    handleClickKaynakKurumItem,
-    kaynakKurumlarList
+    handleClickKaynakKurumItem
   ]
 }

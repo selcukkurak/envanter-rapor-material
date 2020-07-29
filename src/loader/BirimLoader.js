@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import Axios from 'axios'
-import keyBy from 'lodash/keyBy'
 import { turkishTitleCase } from '@tuik/util'
-import { useGlobalState } from '../store'
+import { birimlerState } from '../store'
+import { useSetRecoilState } from 'recoil/dist'
 
 function birimAdiKucult (birim) {
   return {
@@ -12,12 +12,12 @@ function birimAdiKucult (birim) {
 }
 
 export default function (props) {
-  const [, setBirimler] = useGlobalState('birimler')
+  const setBirimler = useSetRecoilState(birimlerState)
 
   useEffect(() => {
     Axios.get('/api/birimler')
-      .then(response => setBirimler(keyBy(response.data.map(birimAdiKucult), 'id')))
-  }, [])
+      .then(response => setBirimler(response.data.map(birimAdiKucult)))
+  }, [setBirimler])
 
   return null
 }
