@@ -11,7 +11,7 @@
  * Projeye göre değiştirilecekler:
  *   - grup: rocket chat mesajlarının gideceği grup adı
  * */
- @Library('docker-shared-lib@master') _
+@Library('docker-shared-lib@master') _
 
 pipeline {
   environment {
