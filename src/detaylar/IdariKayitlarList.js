@@ -5,7 +5,7 @@ import IdariKayitDetayDialog from './IdariKayitDetayDialog.js';
 
 
 export default function IdariKayitlarList(props){
-    const [selectedItem, setSelectedItem] = useState(null)
+    const [, setSelectedItem] = useState(null)
     const handleClickItem = (event,index) => {
         setSelectedItem(index);
     }
@@ -18,7 +18,6 @@ export default function IdariKayitlarList(props){
               <ListItem
                 key={value.id}
                 button
-                selected={selectedItem===value.id}
                 onClick={(event) => handleClickItem(event, value.id)}>
                 <IdariKayitDetayDialog idariKayitValue={value} />
               </ListItem>

@@ -5,6 +5,7 @@ import uniq from 'lodash/uniq'
 import { localSort } from '../util/sort'
 import groupBy from 'lodash/groupBy'
 import maxBy from 'lodash/maxBy'
+import Axios from 'axios'
 
 function birimAdiKisalt (birim) {
   return {
@@ -40,6 +41,20 @@ export const seciliUrun = selector({
   key: 'seciliUrun',
   get: ({ get }) => {
     return get(urunlerState).find(urun => urun.id === get(seciliUrunState))
+  }
+})
+
+export const seciliUrunDetay =selector({
+  key: 'seciliUrunDetay',
+  get: async ({ get }) => {
+    const urunId = get(seciliUrunState)
+    if (urunId !== null) {
+      const response = await Axios.get(`/api/urunler/${urunId}`)
+
+      return response.data
+    } else {
+      return null
+    }
   }
 })
 

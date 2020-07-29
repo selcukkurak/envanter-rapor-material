@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core'
-import React, { memo } from 'react'
+import React, { memo, Suspense } from 'react'
 import 'typeface-roboto'
 import './App.css'
 import HeaderBar from './HeaderBar.js'
@@ -58,7 +58,9 @@ function App() {
               </Grid>
               <Grid item xs={5}>
                 <UrunDetay />
-                <DetayListesi />
+                <Suspense fallback={<div>Yükleniyor...</div>}>
+                  <DetayListesi />
+                </Suspense>
               </Grid>
             </Grid>
           </OrtaBolme>

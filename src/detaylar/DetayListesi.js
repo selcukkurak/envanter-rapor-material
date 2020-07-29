@@ -1,8 +1,7 @@
 import { Card, CardContent, Typography } from '@material-ui/core'
 import IdariKayitlarList from './IdariKayitlarList'
 import AnketlerList from './AnketlerList'
-import React, { useEffect, useState } from 'react'
-import Axios from 'axios'
+import React from 'react'
 import styled from 'styled-components'
 import Link from '@material-ui/core/Link'
 import Table from '@material-ui/core/Table'
@@ -12,7 +11,8 @@ import TableCell from '@material-ui/core/TableCell'
 import TableBody from '@material-ui/core/TableBody'
 import { BaslikRenkleri } from '@tuik/renkler'
 import { useRecoilValue } from 'recoil/dist'
-import { seciliUrun, tekilBultenler } from '../store/selectors'
+import { seciliUrunDetay, tekilBultenler } from '../store/selectors'
+import BagliUrunList from './BagliUrunList'
 
 const Bolum = styled.div`
   margin-bottom: 12px;
@@ -33,27 +33,19 @@ const SubHeader = styled.div`
 `
 
 function DetayListesi () {
-  const [idariKayitlar, setIdariKayitlar] = useState([])
-  const [anketler, setAnketler]=useState([])
-  const [paylasimlar, setPaylasimlar] = useState([])
-
-  const urun = useRecoilValue(seciliUrun)
+  const urun = useRecoilValue(seciliUrunDetay)
   const bultenler = useRecoilValue(tekilBultenler)
 
-  useEffect(() => {
-    if(urun) {
-      Axios.get(`/api/urunler/${urun.id}/idari-kayitlar`)
-        .then(response => setIdariKayitlar(response.data))
-
-      Axios.get(`/api/urunler/${urun.id}/anketler`)
-        .then(response => setAnketler(response.data))
-
-      Axios.get(`/api/urunler/${urun.id}/paylasimlar`)
-        .then(response => setPaylasimlar(response.data))
-    }
-  },[urun])
-
   if (!urun) return null
+
+  console.debug('Ürün Detay', urun)
+
+  const {
+    paylasimlar,
+    urunler,
+    anketler,
+    idariKayitlar
+  } = urun
 
   const urunBultenleri = urun.bultenler
     .map(b => bultenler.find(bulten => bulten.id === b.bultenId))
@@ -70,6 +62,12 @@ function DetayListesi () {
                   <Header>GİRDİLER</Header>
                 </Typography>
               </Row>
+              {urunler.length > 0 && (
+                <Row>
+                  <SubHeader>Bağlı Ürünler</SubHeader>
+                  <BagliUrunList urunler={urunler} />
+                </Row>
+              )}
               {idariKayitlar.length > 0 && (
                 <Row>
                   <SubHeader>İdari Kayıtlar</SubHeader>
