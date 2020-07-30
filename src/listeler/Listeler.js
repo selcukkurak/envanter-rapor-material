@@ -107,8 +107,8 @@ function Listeler () {
             return (
               <ListeItem
                 key={key}
-                selected={selectedKaynakKurum===kurum.id}
-                onClick={(event) => handleClickKaynakKurumItem(event, kurum.id)}
+                selected={selectedKaynakKurum===kurum.kodu}
+                onClick={(event) => handleClickKaynakKurumItem(event, kurum.kodu)}
                 text={kurum.adi} />
             )
           }} />

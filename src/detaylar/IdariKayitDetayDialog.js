@@ -21,7 +21,7 @@ export default function IdariKayitDetayDialog(props) {
   const {idariKayitValue} = props
   const [open, setOpen] = React.useState(false);
   const kurumlar = useRecoilValue(siraliKurumlar)
-  const kurum = kurumlar.find(k => k.id === idariKayitValue.kaynakKurumId)
+  const kurum = kurumlar.find(k => k.kodu === idariKayitValue.kaynakKurumId)
 
   const handleClickOpen = () => {
     setOpen(true);

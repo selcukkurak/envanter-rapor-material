@@ -12,11 +12,11 @@ export default function useFiltreliKurumlar (filtreliUrunler, arananKurum) {
 
     return kurumlar.filter(kurum => {
       if (urun) {
-        return urun.kurumlar.some(k => k.kurumId === kurum.id)
+        return urun.kurumlar.some(k => k.kurumId === kurum.kodu)
       } else if (arananKurum) {
         return (kurum.adi.toLowerCase().includes(arananKurum.toLowerCase()))
       } else {
-        return urunKurumIdleri.includes(kurum.id)
+        return urunKurumIdleri.includes(kurum.kodu)
       }
     })
   }, [
