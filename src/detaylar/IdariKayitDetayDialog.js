@@ -188,7 +188,7 @@ export default function IdariKayitDetayDialog(props) {
                         </TableHead>
                         <TableBody>
                         {idariKayitValue.iletisimKisileri.filter(kisi => kisi.kurumDisi).map((row) => (
-                            <TableRow key={row.name}>
+                            <TableRow key={row.id}>
                                 <TableCell>{row.adSoyad}</TableCell>
                                 <TableCell>{row.disBirimAdi}</TableCell>
                                 <TableCell>{row.telefon}</TableCell>
@@ -218,7 +218,7 @@ export default function IdariKayitDetayDialog(props) {
                   </TableHead>
                   <TableBody>
                     {idariKayitValue.iletisimKisileri.filter(kisi => !kisi.kurumDisi).map((row) => (
-                      <TableRow key={row.name}>
+                      <TableRow key={row.id}>
                         <TableCell>{row.adSoyad}</TableCell>
                         <TableCell>{row.birimId}</TableCell>
                         <TableCell>{row.telefon}</TableCell>

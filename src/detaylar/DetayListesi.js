@@ -96,7 +96,7 @@ function DetayListesi () {
               <Row>
                 <SubHeader>Haber Bültenleri</SubHeader>
                 {urunBultenleri.map(bulten => (
-                  <Row>
+                  <Row key={bulten.id}>
                     <Link href={bulten.sonYayin.url} target='_blank' title={bulten.sonYayin.donemi}>{bulten.adi}</Link>
                   </Row>
                 ))}
