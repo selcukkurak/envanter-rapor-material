@@ -3,6 +3,13 @@ import { TextField } from '@material-ui/core'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { seciliVeriTuruState } from '../store'
 import { useSetRecoilState } from 'recoil/dist'
+import styled from 'styled-components'
+
+const AutoCompleteWhite = styled(Autocomplete)`
+  .MuiInputBase-input {
+    color: white;
+  }
+`
 
 function VeriTuruListesi () {
   const setSecilenVeriTuru = useSetRecoilState(seciliVeriTuruState)
@@ -18,7 +25,7 @@ function VeriTuruListesi () {
   }
 
   return (
-    <Autocomplete
+    <AutoCompleteWhite
       size='small'
       options={veriTuruList}
       getOptionLabel={(option) => option.adi}
