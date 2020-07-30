@@ -31,9 +31,12 @@ export const siraliUrunDaireleri = selector({
     const birimler = get(birimlerById)
     const urunler = get(urunlerState)
     const urunBirimIdleri = uniq(urunler.map(urun => urun.birimId))
-    const daireIdleri = uniq(urunBirimIdleri.map(id => birimler[id].ustBirimId))
+    const daireIdleri = uniq(urunBirimIdleri
+      .filter(id => birimler[id])
+      .map(id => birimler[id].ustBirimId)
+    )
 
-    return  localSort(daireIdleri.map(id => birimler[id]).map(birimAdiKisalt), 'adi')
+    return localSort(daireIdleri.map(id => birimler[id]).map(birimAdiKisalt), 'adi')
   }
 })
 
