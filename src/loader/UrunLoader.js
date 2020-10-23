@@ -13,11 +13,13 @@ async function urunleriGetir () {
   const sayilarById = keyBy(sayilar.data, 'id')
   const kurumlarById = keyBy(kurumlar.data, 'id')
 
-  return urunler.data.map(urun => ({
-    ...urun,
-    sayilar: sayilarById[urun.id],
-    kurumlar: kurumlarById[urun.id].kurumlar
-  }))
+  return urunler.data
+    .filter(urun => !urun.taslak)
+    .map(urun => ({
+      ...urun,
+      sayilar: sayilarById[urun.id],
+      kurumlar: kurumlarById[urun.id].kurumlar
+    }))
 }
 
 export default function (props) {
